@@ -1,0 +1,12 @@
+\begin{tikzpicture}[scale=0.82,>=Stealth,font=\scriptsize]
+\begin{scope}
+\draw[->] (0,0) -- (4.6,0) node[right] {$r$};
+\draw[->] (0,0) -- (0,3.0) node[above] {$\sigma_{yy}$};
+\draw[domain=0.22:4.3,samples=120,thick,red!70!black] plot (\x,{1.25/sqrt(\x)});
+\draw[dashed] (0,0.6) -- (4.4,0.6) node[right,font=\tiny] {remote $\sigma$};
+\node[red!70!black,anchor=west] at (1.4,2.2) {$\sigma_{yy}=\dfrac{K_{\mathrm I}}{\sqrt{2\pi r}}$};
+\fill[gray!30,opacity=0.6] (0,0) rectangle (0.5,3.0);
+\node[anchor=west,font=\tiny,align=left] at (0.62,2.55) {plastic\\ zone};
+\node[anchor=north] at (2.3,-0.25) {the crack-tip field};
+\end{scope}
+\end{tikzpicture}

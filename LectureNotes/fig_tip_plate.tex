@@ -1,0 +1,14 @@
+\begin{tikzpicture}[scale=0.82,>=Stealth,font=\scriptsize]
+\begin{scope}
+\fill[blue!10] (0,0) rectangle (4.6,3.0);
+\draw[thick] (0,0) rectangle (4.6,3.0);
+\draw[line width=1.4pt] (1.0,1.5) -- (2.6,1.5);
+\fill (2.6,1.5) circle (1.6pt);
+\draw[->] (2.6,1.5) -- (3.5,2.1) node[midway,above,sloped] {$r$};
+\draw (3.1,1.5) arc (0:33:0.5); \node at (3.25,1.72) {$\theta$};
+\foreach \y in {0.3,0.75,...,2.9} {\draw[->,blue!55!black] (-0.75,\y) -- (-0.05,\y); \draw[->,blue!55!black] (5.35,\y) -- (4.65,\y);}
+\node[blue!55!black,anchor=east] at (-0.85,1.5) {$\sigma$};
+\draw[<->] (1.0,1.15) -- (2.6,1.15) node[midway,below] {$a$};
+\node[anchor=north] at (2.3,-0.2) {a crack in a plate};
+\end{scope}
+\end{tikzpicture}
