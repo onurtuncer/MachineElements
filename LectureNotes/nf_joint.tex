@@ -1,0 +1,23 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize,line join=round]
+\draw[->] (-0.2,0) -- (6.6,0) node[right] {deflection $\delta$};
+\draw[->] (0,-0.2) -- (0,4.1) node[above] {force};
+% bolt line (shallow, slope k_b) and member line (steep, slope k_m)
+\draw[very thick,blue!60!black] (0,0) -- (4,3);
+\draw[very thick,red!65!black] (5,0) -- (4,3);
+\draw[gray!60,dashed] (0,3) -- (4,3);
+\draw[gray!60,dashed] (4,0) -- (4,3);
+\node[anchor=east] at (-0.06,3) {$F_i$};
+\node[blue!60!black,anchor=south east,align=center] at (2.1,1.5)
+  {bolt, slope $k_b$\\ \emph{stretches}};
+\node[red!65!black,anchor=south west,align=center] at (4.55,1.4)
+  {members, slope $k_m$\\ \emph{compress}};
+\draw[<->] (0,-0.42) -- (4,-0.42) node[midway,below] {$\delta_b = F_i/k_b$};
+\draw[<->] (4,-0.42) -- (5,-0.42) node[midway,below,xshift=6pt] {$\delta_m$};
+\node[anchor=west,align=left,text width=4.5cm] at (6.9,2.6)
+  {$k_m$ is typically \textbf{3 to 5 times} $k_b$ --- the squat block of metal is far stiffer than
+   the slender bolt through it.};
+\node[anchor=west,align=left,text width=4.5cm] at (6.9,1.0)
+  {So the member line is steep and the bolt line is shallow, and an external load is shared in that
+   ratio.};
+\end{tikzpicture}

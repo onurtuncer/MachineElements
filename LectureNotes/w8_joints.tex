@@ -1,0 +1,22 @@
+% Bonded joint configurations, from worst to best.
+\begin{tikzpicture}[line join=round,>=Latex]
+\tikzset{ad/.style={fill=black!12,draw=black,line width=0.6pt}, gl/.style={black!70,line width=2pt,line cap=butt},
+  ttl/.style={font=\footnotesize\bfseries,anchor=west}, sub/.style={font=\scriptsize,anchor=west,text=black!65}}
+% single lap
+\begin{scope}
+ \path[ad] (0,0.05) rectangle (3.0,0.4); \path[ad] (1.6,-0.4) rectangle (4.6,-0.05); \draw[gl] (1.6,0) -- (3.0,0);
+ \node[ttl] at (5.2,0.18) {Single lap}; \node[sub] at (5.2,-0.22) {offset load path: it bends, and the ends peel};
+\end{scope}
+\begin{scope}[yshift=-1.5cm]
+ \path[ad] (0,0.05) -- (2.2,0.05) -- (3.0,0.05) -- (2.2,0.4) -- (0,0.4) -- cycle; \path[ad] (1.6,-0.05) -- (2.4,-0.4) -- (4.6,-0.4) -- (4.6,-0.05) -- cycle; \draw[gl] (1.6,0) -- (3.0,0);
+ \node[ttl] at (5.2,0.18) {Tapered lap}; \node[sub] at (5.2,-0.22) {thin, flexible ends: lower peak stress and peel};
+\end{scope}
+\begin{scope}[yshift=-3.2cm]
+ \path[ad] (0,-0.17) rectangle (3.0,0.17); \path[ad] (1.6,0.22) rectangle (4.6,0.5); \path[ad] (1.6,-0.5) rectangle (4.6,-0.22); \draw[gl] (1.6,0.195) -- (3.0,0.195) (1.6,-0.195) -- (3.0,-0.195);
+ \node[ttl] at (5.2,0.18) {Double lap}; \node[sub] at (5.2,-0.22) {symmetric: no bending, twice the bond area};
+\end{scope}
+\begin{scope}[yshift=-4.8cm]
+ \path[ad] (0,-0.2) -- (3.4,-0.2) -- (1.2,0.2) -- (0,0.2) -- cycle; \path[ad] (3.48,-0.2) -- (4.6,-0.2) -- (4.6,0.2) -- (1.28,0.2) -- cycle; \draw[gl] (3.44,-0.2) -- (1.24,0.2);
+ \node[ttl] at (5.2,0.18) {Scarf}; \node[sub] at (5.2,-0.22) {nearly uniform shear: the best --- and the hardest to make};
+\end{scope}
+\end{tikzpicture}

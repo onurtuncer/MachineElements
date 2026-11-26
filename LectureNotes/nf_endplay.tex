@@ -1,0 +1,44 @@
+
+\begin{tikzpicture}[scale=1.05,>=Stealth,font=\scriptsize,line join=round]
+\tikzset{scr/.style={thick,fill=gray!30},nut/.style={thick,fill=gray!52}}
+% ================= (a) as new =================
+\begin{scope}
+\fill[gray!30] (0,0) rectangle (4.3,0.40); \draw[thick] (0,0) rectangle (4.3,0.40);
+\node[anchor=west,font=\tiny] at (4.36,0.20) {screw};
+\foreach \x in {0.35,1.55,2.75}{
+  \draw[scr] (\x,0.40) -- (\x+0.20,1.06) -- (\x+0.70,1.06) -- (\x+0.90,0.40) -- cycle;}
+\fill[gray!52] (0.05,1.46) rectangle (4.25,1.86); \draw[thick] (0.05,1.46) rectangle (4.25,1.86);
+\node[anchor=west,font=\tiny] at (4.36,1.66) {nut};
+\foreach \x in {1.25,2.45,3.65}{
+  \draw[nut] (\x,1.46) -- (\x-0.20,0.80) -- (\x+0.30,0.80) -- (\x+0.50,1.46) -- cycle;}
+\draw[green!40!black,line width=1.3pt] (1.05,0.80) -- (1.25,1.46);
+\draw[->,green!40!black] (0.55,2.26) -- (1.08,1.20);
+\node[green!35!black,anchor=south,font=\tiny,align=center] at (0.55,2.28)
+  {loaded flanks\\ in contact};
+\node[anchor=north,font=\bfseries] at (2.15,-0.14) {(a) as new};
+\node[anchor=north,align=center,font=\tiny,text width=4.6cm] at (2.15,-0.44)
+  {axial free play is the small design clearance};
+\end{scope}
+% ================= (b) worn =================
+\begin{scope}[xshift=6.6cm]
+\fill[gray!30] (0,0) rectangle (4.3,0.40); \draw[thick] (0,0) rectangle (4.3,0.40);
+\foreach \x in {0.35,1.55,2.75}{
+  \draw[scr] (\x,0.40) -- (\x+0.20,1.06) -- (\x+0.70,1.06) -- (\x+0.90,0.40) -- cycle;}
+\fill[gray!52] (0.05,1.46) rectangle (4.25,1.86); \draw[thick] (0.05,1.46) rectangle (4.25,1.86);
+% worn nut teeth: the loaded flank has receded
+\foreach \x in {1.25,2.45,3.65}{
+  \draw[nut] (\x+0.30,1.46) -- (\x+0.10,0.80) -- (\x+0.30,0.80) -- (\x+0.50,1.46) -- cycle;
+  \draw[red!75!black,densely dashed,line width=0.7pt] (\x,1.46) -- (\x-0.20,0.80);}
+\draw[<->,red!75!black,thick] (1.05,1.13) -- (1.35,1.13);
+\draw[->,red!75!black] (0.60,2.26) -- (1.16,1.22);
+\node[red!75!black,anchor=south,font=\tiny,align=center] at (0.60,2.28)
+  {flank worn away\\ (dashed $=$ as new)};
+\draw[<->,thick] (4.42,0.80) -- (4.42,1.46);
+\node[anchor=west,align=left,font=\tiny,text width=2.0cm] at (4.48,1.13)
+  {the nut can now move axially by the wear before the flanks touch};
+\node[anchor=north,font=\bfseries] at (2.15,-0.14) {(b) worn};
+\node[anchor=north,align=center,font=\tiny,text width=5.6cm] at (2.15,-0.44)
+  {the \textbf{end-play check} measures exactly this lost motion --- a
+   \emph{direct} measurement of the wear};
+\end{scope}
+\end{tikzpicture}

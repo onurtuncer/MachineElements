@@ -1,0 +1,36 @@
+
+\begin{tikzpicture}[scale=1.15,>=Stealth,font=\scriptsize,line join=round]
+\begin{scope}
+\fill[gray!14] (0,0) -- (0.5,0) -- (0.5,1.0) -- (1.5,1.0) -- (1.5,0) -- (2.0,0)
+ -- (2.0,-0.5) -- (0,-0.5) -- cycle;
+\draw[thick] (0,0) -- (0.5,0) -- (0.5,1.0) -- (1.5,1.0) -- (1.5,0) -- (2.0,0);
+\draw[thick] (0,-0.5) -- (2.0,-0.5);
+\node[anchor=north,font=\bfseries] at (1.0,-0.62) {square};
+\node[anchor=north,align=center,text width=3.3cm,font=\tiny] at (1.0,-0.92)
+ {highest efficiency; no radial thrust; hard to cut, no split nut};
+\end{scope}
+\begin{scope}[xshift=4.0cm]
+\fill[gray!14] (0,0) -- (0.37,0) -- (0.63,1.0) -- (1.37,1.0) -- (1.63,0) -- (2.0,0)
+ -- (2.0,-0.5) -- (0,-0.5) -- cycle;
+\draw[thick] (0,0) -- (0.37,0) -- (0.63,1.0) -- (1.37,1.0) -- (1.63,0) -- (2.0,0);
+\draw[thick] (0,-0.5) -- (2.0,-0.5);
+\draw[red!70!black,line width=0.5pt] (0.63,1.0) -- (1.0,2.42);
+\draw[red!70!black,line width=0.5pt] (1.37,1.0) -- (1.0,2.42);
+\draw[red!70!black] ($(1.0,2.42)+(255.4:0.78)$) arc (255.4:284.6:0.78);
+\node[red!70!black,anchor=north,font=\tiny] at (1.0,1.60) {$29^\circ$};
+\node[anchor=north,font=\bfseries] at (1.0,-0.62) {Acme};
+\node[anchor=north,align=center,text width=3.3cm,font=\tiny] at (1.0,-0.92)
+ {easy to cut and inspect; split nut takes up wear; the workhorse};
+\end{scope}
+\begin{scope}[xshift=8.0cm]
+\fill[gray!14] (0,0) -- (0.5,0) -- (0.5,1.0) -- (1.35,1.0) -- (1.75,0) -- (2.0,0)
+ -- (2.0,-0.5) -- (0,-0.5) -- cycle;
+\draw[thick] (0,0) -- (0.5,0) -- (0.5,1.0) -- (1.35,1.0) -- (1.75,0) -- (2.0,0);
+\draw[thick] (0,-0.5) -- (2.0,-0.5);
+\draw[->,very thick] (0.17,1.40) -- (0.17,1.06);
+\node[anchor=south,font=\tiny] at (0.17,1.41) {load};
+\node[anchor=north,font=\bfseries] at (1.0,-0.62) {buttress};
+\node[anchor=north,align=center,text width=3.3cm,font=\tiny] at (1.0,-0.92)
+ {square efficiency in \emph{one} direction only; weak the other way};
+\end{scope}
+\end{tikzpicture}

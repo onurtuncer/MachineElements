@@ -1,0 +1,21 @@
+% A lap joint seen from above: parallel (longitudinal) and transverse fillets.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{lab/.style={font=\Large}}
+\begin{scope}
+\fill[black!8] (-3.6,-1.5) rectangle (1.2,1.5); \draw[line width=0.6pt] (-3.6,-1.5) rectangle (1.2,1.5);
+\fill[black!22] (-1.6,-0.8) rectangle (4.2,0.8); \draw[line width=0.6pt] (-1.6,-0.8) rectangle (4.2,0.8);
+\fill[black!75] (-1.6,0.8) rectangle (1.2,0.98); \fill[black!75] (-1.6,-0.8) rectangle (1.2,-0.98);
+\draw[->,line width=1.2pt] (4.3,0) -- (5.5,0) node[lab,anchor=west] {$F$};
+\draw[->,line width=1.2pt] (-3.7,0) -- (-4.9,0) node[lab,anchor=east] {$F$};
+\draw[<->,black!70,line width=0.4pt] (-1.6,1.25) -- (1.2,1.25); \node[lab,anchor=south,fill=black!8,inner sep=1pt] at (-0.2,1.27) {$l$};
+\node[lab,anchor=north] at (0.4,-1.7) {\textbf{Parallel fillets}: the weld runs along the load};
+\end{scope}
+\begin{scope}[xshift=12.6cm]
+\fill[black!8] (-3.6,-1.5) rectangle (1.2,1.5); \draw[line width=0.6pt] (-3.6,-1.5) rectangle (1.2,1.5);
+\fill[black!22] (-1.6,-0.8) rectangle (4.2,0.8); \draw[line width=0.6pt] (-1.6,-0.8) rectangle (4.2,0.8);
+\fill[black!75] (-1.78,-0.8) rectangle (-1.6,0.8);
+\draw[->,line width=1.2pt] (4.3,0) -- (5.5,0) node[lab,anchor=west] {$F$};
+\draw[->,line width=1.2pt] (-3.7,0) -- (-4.9,0) node[lab,anchor=east] {$F$};
+\node[lab,anchor=north] at (0.4,-1.7) {\textbf{Transverse fillet}: the weld runs across the load};
+\end{scope}
+\end{tikzpicture}

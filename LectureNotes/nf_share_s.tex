@@ -1,0 +1,32 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize,line join=round]
+% ---------------- left: why ----------------
+\begin{scope}
+\fill[gray!22] (0,0) rectangle (0.62,4.2);
+\draw[thick] (0,0) rectangle (0.62,4.2);
+\node[anchor=south,font=\tiny] at (0.31,4.25) {bolt};
+\fill[gray!38] (0.62,0.5) rectangle (1.9,3.3);
+\draw[thick] (0.62,0.5) rectangle (1.9,3.3);
+\node[anchor=west,font=\tiny] at (1.95,2.9) {nut};
+\foreach \y/\n in {3.05/1,2.63/2,2.21/3,1.79/4,1.37/5,0.95/6,0.53/7}{
+  \draw[thick] (0.62,\y) -- (0.95,\y);
+  \node[anchor=east,font=\tiny] at (0.58,\y) {\n};}
+\draw[->,blue!60!black,very thick] (0.31,4.35) -- (0.31,4.95);
+\node[blue!60!black,anchor=south,font=\tiny] at (0.31,4.97) {$F$};
+\draw[->,blue!60!black,very thick] (1.26,0.40) -- (1.26,-0.20);
+\node[blue!60!black,anchor=north,font=\tiny,align=center] at (1.26,-0.22) {reaction};
+\end{scope}
+% ---------------- right: how much ----------------
+\begin{scope}[xshift=5.6cm]
+\foreach \n/\v in {1/34,2/23,3/16,4/11,5/7,6/5,7/4}{
+  \pgfmathsetmacro\yy{3.05-(\n-1)*0.42}
+  \pgfmathsetmacro\ww{\v*0.105}
+  \fill[blue!55!black] (0,\yy-0.15) rectangle (\ww,\yy+0.15);
+  \draw[thick] (0,\yy-0.15) rectangle (\ww,\yy+0.15);
+  \node[anchor=west,font=\tiny] at (\ww+0.08,\yy) {\v\%};
+  \node[anchor=east,font=\tiny] at (-0.08,\yy) {\n};}
+\draw[thick] (0,0.3) -- (0,3.35);
+\node[anchor=south,font=\tiny,align=center] at (1.9,3.45)
+  {share of the total load\\ carried by each engaged thread};
+\end{scope}
+\end{tikzpicture}

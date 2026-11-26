@@ -1,0 +1,57 @@
+% One acme nut thread in axial section, at four stages of wear. Screw axis horizontal.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  brz/.style={fill=orange!32,draw=orange!70!black,thick},
+  body/.style={fill=orange!14,draw=orange!70!black,thick},
+  gone/.style={fill=red!7,draw=red!50,thin,dashed},
+  scr/.style={fill=blue!10,draw=blue!55!black,thick},
+  ld/.style={->,red!70!black,line width=1.2pt},
+  ttl/.style={font=\scriptsize\bfseries,align=center,text width=4.0cm,anchor=north},
+  sub/.style={font=\tiny,align=center,text width=3.7cm,text=black!60,anchor=north}
+}
+\def\S{10.5}      % in -> cm, thickness scale
+\def\Ht{1.25}     % tooth height (radial)
+\def\tap{0.16}    % half-taper
+
+% \tooth{x centre}{wear depth, in}{contact height fraction}{title}{subtitle}
+\newcommand{\tooth}[5]{%
+  \pgfmathsetmacro\tn{0.15*\S}            % new half-widths
+  \pgfmathsetmacro\tw{(0.15-#2)*\S}       % worn thickness
+  \pgfmathsetmacro\w{#2*\S}               % material lost, off the left flank
+  % nut body above, bore to left and right
+  \fill[body] (#1-2.10,\Ht) rectangle (#1+2.10,\Ht+0.42);
+  % ghost of the original tooth
+  \ifdim #2pt>0pt
+    \fill[gone] (#1-\tn/2-\tap,0) -- (#1+\tn/2+\tap,0)
+             -- (#1+\tn/2,\Ht) -- (#1-\tn/2,\Ht) -- cycle;
+  \fi
+  % the remaining tooth: left flank has retreated by \w
+  \fill[brz] (#1-\tn/2-\tap+\w,0) -- (#1+\tn/2+\tap,0)
+          -- (#1+\tn/2,\Ht) -- (#1-\tn/2+\w,\Ht) -- cycle;
+  \draw[orange!70!black,thick] (#1-\tn/2-\tap+\w,0) -- (#1+\tn/2+\tap,0)
+          -- (#1+\tn/2,\Ht) -- (#1-\tn/2+\w,\Ht) -- cycle;
+  % the screw flank bearing on it, pushing left-to-right
+  \fill[scr] (#1-2.10,-0.05) -- (#1-\tn/2-\tap+\w-0.06,-0.05)
+          -- (#1-\tn/2+\w-0.06,\Ht) -- (#1-2.10,\Ht) -- cycle;
+  \node[font=\tiny,text=blue!55!black,anchor=west] at (#1-2.05,\Ht*0.72) {screw};
+  % load, applied over the part of the flank still in contact
+  \pgfmathsetmacro\yc{\Ht*#3}
+  \draw[ld] (#1-1.35,\yc) -- (#1-\tn/2-\tap+\w-0.10,\yc);
+  % thickness at the tip (minor diameter), where the 0.15 in is quoted
+  \draw[<->,gray!75!black,thin] (#1-\tn/2-\tap+\w,-0.42) -- (#1+\tn/2+\tap,-0.42);
+  \node[font=\tiny,anchor=north,text=gray!50!black] at (#1,-0.44)
+    {\pgfmathparse{0.15-#2}\pgfmathprintnumber[fixed,precision=3]{\pgfmathresult}\,in};
+  \node[ttl] at (#1,-0.92) {#4};
+  \node[sub] at (#1,-1.62) {#5};
+}
+
+\tooth{0}{0.000}{0.50}{New}{\SI{0.15}{in} at the minor diameter. Thread strength \textbf{over 15 times} the design load.}
+\tooth{4.5}{0.037}{0.50}{At the replacement limit}{\SI{0.040}{in} end play. Still \textbf{10 times} stronger than the design load --- so the limit is \emph{not} a strength limit.}
+\tooth{9.0}{0.080}{0.30}{Contact retreats}{``the tip of the thread stopped wearing while the rest of the face continued wearing''}
+\tooth{13.5}{0.140}{0.16}{Sheared}{\SI{0.01}{in} left, about \SI{90}{\percent} gone. ``The fracture mode is shear.''}
+
+\node[font=\footnotesize,align=center,text width=15.5cm,anchor=north] at (6.75,-2.95)
+ {The bearing area falls with the thickness, so the pressure rises as $p\propto1/t$ --- and the wear
+  rate rises with it. \textbf{The wear is not linear, and the last of it is the fastest.}};
+
+\end{tikzpicture}

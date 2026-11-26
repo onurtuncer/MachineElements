@@ -1,0 +1,72 @@
+% Eccentric shear on a bolt group. Numbers are Example 6.3: P = 18 kN at e = 250 mm,
+% six bolts at (+-40, 0/+-60) mm, sum r^2 = 24 000 mm^2.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  brk/.style={fill=black!9,draw=black!60,thick},
+  blt/.style={fill=blue!16,draw=blue!60!black,thick},
+  ld/.style={->,red!70!black,line width=1.4pt},
+  vd/.style={->,black!60,line width=1.0pt},
+  vm/.style={->,orange!75!black,line width=1.0pt},
+  vr/.style={->,red!70!black,line width=1.5pt},
+  lb/.style={font=\scriptsize},
+  sm/.style={font=\tiny,text=black!60},
+  dimn/.style={<->,gray!70!black,thin}
+}
+\def\g{0.032}    % mm -> cm
+\def\f{0.105}    % kN -> cm
+
+% ---- bracket ----
+\fill[brk] (-2.35,-2.75) -- (8.55,-2.75) -- (8.55,-1.9) -- (-0.4,-1.9)
+        -- (-0.4,2.75) -- (-2.35,2.75) -- cycle;
+\draw[black!60,thick] (-2.35,-2.75) -- (8.55,-2.75) -- (8.55,-1.9) -- (-0.4,-1.9)
+        -- (-0.4,2.75) -- (-2.35,2.75) -- cycle;
+% wall
+\draw[black!65,line width=1.2pt] (-2.55,-3.0) -- (-2.55,3.0);
+\foreach \k in {-2.8,-2.4,...,2.9}{\draw[black!50,thin] (-2.55,\k) -- (-2.85,\k-0.25);}
+
+% ---- bolts ----
+\foreach \X/\Y in {-40/-60, 40/-60, -40/0, 40/0, -40/60, 40/60}{
+  \pgfmathsetmacro\xx{\X*\g}\pgfmathsetmacro\yy{\Y*\g}
+  \fill[blt] (\xx,\yy) circle (0.21);
+  \draw[blue!60!black,thick] (\xx,\yy) circle (0.21);}
+
+% ---- centroid ----
+\draw[black!70,thin] (-0.28,0) -- (0.28,0) (0,-0.28) -- (0,0.28);
+\fill[black] (0,0) circle (1.3pt);
+\node[sm,anchor=south east] at (-0.07,0.12) {centroid};
+
+% ---- geometry dimensions ----
+\draw[dimn] (-40*\g,3.05) -- (40*\g,3.05);
+\node[sm,anchor=south,fill=white,inner sep=1pt] at (0,3.02) {\SI{80}{mm}};
+\draw[dimn] (2.1,-60*\g) -- (2.1,0);
+\node[sm,anchor=west] at (2.16,-0.96) {\SI{60}{mm}};
+
+% ---- applied load ----
+\draw[ld] (250*\g,1.85) -- (250*\g,-1.75);
+\node[lb,text=red!70!black,anchor=south] at (250*\g,1.90) {$P=\SI{18}{kN}$};
+\draw[dimn] (0,2.35) -- (250*\g,2.35);
+\node[sm,anchor=south,fill=white,inner sep=1pt] at (4.0,2.32) {$e=\SI{250}{mm}$};
+
+% ---- the two critical bolts, with the vector sum drawn on the lower one ----
+\pgfmathsetmacro\cx{-40*\g}\pgfmathsetmacro\cy{-60*\g}
+\draw[vd] (\cx,\cy) -- (\cx,{\cy-3.0*\f});
+\node[sm,anchor=south west] at (\cx+0.26,{\cy+0.04}) {$P/n=\SI{3}{kN}$};
+\draw[vm] (\cx,\cy) -- ({\cx+11.25*\f},{\cy-7.5*\f});
+\node[sm,text=orange!65!black,anchor=south west] at ({\cx+11.25*\f+0.06},{\cy-7.5*\f+0.02})
+  {$Mr/\sum r^2 = \SI{13.5}{kN}$};
+\draw[vr] (\cx,\cy) -- ({\cx+11.25*\f},{\cy-10.5*\f});
+\node[font=\scriptsize\bfseries,text=red!70!black,anchor=north west] at ({\cx+11.25*\f+0.05},{\cy-10.5*\f-0.05})
+  {$R=\SI{15.4}{kN}$};
+\draw[blue!60!black,dashed] ({\cx+11.25*\f},{\cy-7.5*\f}) -- ({\cx+11.25*\f},{\cy-10.5*\f});
+\draw[red!70!black,very thick] (\cx,\cy) circle (0.36);
+\draw[red!70!black,very thick] (\cx,{-\cy}) circle (0.36);
+\node[sm,text=red!70!black,anchor=west] at (\cx+0.44,{-\cy+0.10}) {equally critical};
+
+% ---- the method ----
+\node[font=\footnotesize,align=left,text width=16.3cm,anchor=north west] at (-2.7,-4.15)
+ {Here $\sum r^2=\SI{24000}{mm^2}$ and $M=\SI{4.5}{kN.m}$, so each corner bolt takes
+  \SI{13.5}{kN} from the moment against only \SI{3}{kN} of direct shear --- a ratio of four and a
+  half. \textbf{In an eccentric joint the moment almost always dominates}, and the bolt nearest the
+  load is \emph{not} necessarily the worst one.};
+
+\end{tikzpicture}

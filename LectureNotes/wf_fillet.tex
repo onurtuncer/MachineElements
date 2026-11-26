@@ -1,0 +1,31 @@
+% Fillet weld: the names, and the throat plane of a transverse fillet.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{pl/.style={fill=black!10,draw=black,line width=0.7pt}, lab/.style={font=\footnotesize}, dimn/.style={<->,black!70,line width=0.4pt}}
+% ---------- geometry ----------
+\path[pl] (-3.4,-0.8) rectangle (3.0,0); \path[pl] (-0.9,0) rectangle (0,3.3);
+\fill[black!55] (0,0) -- (2.2,0) -- (0,2.2) -- cycle; \draw[line width=0.7pt] (0,0) -- (2.2,0) -- (0,2.2) -- cycle;
+\draw[white,line width=1.1pt] (0,0) -- (1.1,1.1);
+\draw[dimn] (0,-1.15) -- (2.2,-1.15); \draw[black!60,line width=0.3pt] (2.2,-0.85) -- (2.2,-1.3) (0,-0.85) -- (0,-1.3);
+\node[lab,anchor=north] at (1.1,-1.18) {leg $h$ \ (ISO: $z$)};
+\draw[dimn] (-1.25,0) -- (-1.25,2.2); \draw[black!60,line width=0.3pt] (-0.95,2.2) -- (-1.4,2.2); \node[lab,anchor=east] at (-1.3,1.1) {$h$};
+\draw[<-,line width=0.4pt] (0.62,0.62) -- (2.3,2.0); \node[lab,anchor=west,align=left] at (2.3,2.15) {throat\\ $a=0.707\,h$};
+\draw[<-,line width=0.4pt] (2.2,0.03) -- (3.2,0.8); \node[lab,anchor=west] at (3.2,0.85) {toe};
+\draw[<-,line width=0.4pt] (0.03,2.2) -- (0.9,3.0); \node[lab,anchor=west] at (0.9,3.05) {toe};
+\draw[<-,line width=0.4pt] (0.06,0.06) -- (-1.9,0.9); \node[lab,anchor=east] at (-1.9,0.95) {root};
+\draw[<-,line width=0.4pt] (1.5,0.72) -- (2.4,1.1); \node[lab,anchor=west] at (2.4,1.15) {face};
+% ---------- throat plane at angle theta ----------
+\begin{scope}[xshift=8.6cm]
+\path[pl] (-0.9,0) rectangle (0,3.3); \path[pl] (-3.0,-0.8) rectangle (3.4,0);
+\draw[line width=0.7pt,fill=black!25] (0,0) -- (2.2,0) -- (0,2.2) -- cycle;
+% cut plane through the root at theta from the vertical leg
+\draw[line width=1.2pt] (0,0) -- (0.84,1.36);
+\draw[line width=0.4pt] (0,0.75) arc[start angle=90,end angle=58.3,radius=0.75]; \node[lab] at (0.27,1.02) {$\theta$};
+\draw[->,line width=1.1pt] (-2.6,1.7) -- (-1.0,1.7); \node[lab,anchor=south] at (-1.8,1.72) {$F$};
+\draw[->,line width=1.1pt] (0.42,0.68) -- ++(-31.7:1.25);
+\draw[->,line width=1.1pt] (0.42,0.68) -- ++(58.3:1.25);
+\node[lab,anchor=south west] at (1.1,1.66) {$F_s=F\sin\theta$};
+\node[lab,anchor=west] at (1.55,0.3) {$F_n=F\cos\theta$};
+\node[lab,anchor=west,align=left] at (0.6,3.0) {plane length\\ $h/(\sin\theta+\cos\theta)$};
+\draw[<-,line width=0.4pt] (0.7,1.18) -- (1.1,2.6);
+\end{scope}
+\end{tikzpicture}

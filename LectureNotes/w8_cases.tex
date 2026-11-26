@@ -1,0 +1,37 @@
+% Three ways a weld group is loaded by a moment.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{pl/.style={fill=black!10,draw=black,line width=0.6pt}, col/.style={fill=black!25,draw=black,line width=0.6pt},
+  wd/.style={line width=2.6pt,line cap=round}, ld/.style={->,line width=1.2pt}, ttl/.style={font=\normalsize\bfseries,anchor=north,align=center},
+  sub/.style={font=\small,anchor=north,align=center,text=black!65}}
+% (a) in-plane: torsion
+\begin{scope}
+ \path[col] (-0.9,-1.7) rectangle (0.9,1.7);
+ \path[pl] (-0.5,-0.9) rectangle (3.2,0.9);
+ \draw[wd] (0.9,0.9) -- (-0.5,0.9) -- (-0.5,-0.9) -- (0.9,-0.9);
+ \draw[ld] (2.9,1.6) -- (2.9,0.95); \node[font=\normalsize,anchor=south] at (2.9,1.6) {$P$};
+ \draw[->,line width=0.5pt] (0.75,0) arc[start angle=0,end angle=-250,radius=0.45];
+ \node[ttl] at (1.1,-1.95) {(a) In-plane load};
+ \node[sub] at (1.1,-2.4) {the group is \textbf{twisted}: torsion};
+\end{scope}
+% (b) out-of-plane: bending
+\begin{scope}[xshift=6.3cm]
+ \path[col] (-0.9,-1.7) rectangle (-0.3,1.7);
+ \path[pl] (-0.3,-0.75) rectangle (3.0,0.75);
+ \draw[wd] (-0.3,0.75) -- (-0.3,-0.75);
+ \draw[ld] (2.7,1.5) -- (2.7,0.8); \node[font=\normalsize,anchor=south] at (2.7,1.5) {$P$};
+ \draw[->,line width=0.5pt] (-0.3,1.05) -- (0.25,1.05); \draw[->,line width=0.5pt] (0.25,-1.05) -- (-0.3,-1.05);
+ \node[ttl] at (1.0,-1.95) {(b) Out-of-plane load};
+ \node[sub] at (1.0,-2.4) {the group is \textbf{bent}};
+\end{scope}
+% (c) tube
+\begin{scope}[xshift=12.4cm]
+ \path[col] (-0.9,-1.7) rectangle (-0.3,1.7);
+ \path[pl] (-0.3,-0.45) rectangle (3.0,0.45);
+ \draw[wd] (-0.3,0.45) -- (-0.3,-0.45);
+ \draw[line width=0.4pt,dash pattern=on 6pt off 2pt on 1pt off 2pt] (-1.1,0) -- (3.5,0);
+ \draw[ld] (2.7,1.3) -- (2.7,0.5); \node[font=\normalsize,anchor=south] at (2.7,1.3) {$P$};
+ \draw[->,line width=0.9pt] (3.25,-0.42) arc[start angle=-70,end angle=70,x radius=0.22,y radius=0.45]; \node[font=\normalsize,anchor=west] at (3.5,0) {$T$};
+ \node[ttl] at (1.1,-1.95) {(c) Tube welded all round};
+ \node[sub] at (1.1,-2.4) {bending \emph{and} torsion};
+\end{scope}
+\end{tikzpicture}

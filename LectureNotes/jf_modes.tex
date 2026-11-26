@@ -1,0 +1,87 @@
+% The four ways a shear joint fails. Panel 1 in elevation, panels 2-4 in plan.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  plate/.style={fill=black!10,draw=black!60,thick},
+  plate2/.style={fill=black!18,draw=black!60,thick},
+  blt/.style={fill=blue!14,draw=blue!60!black,thick},
+  fail/.style={red!70!black,line width=1.5pt},
+  crush/.style={fill=red!25,draw=red!65!black,thin},
+  ld/.style={->,black!75,line width=1.2pt},
+  ttl/.style={font=\scriptsize\bfseries,align=center,text width=3.9cm,anchor=north},
+  frm/.style={font=\scriptsize,align=center,text width=4.0cm,anchor=north},
+  sub/.style={font=\tiny,align=center,text width=4.0cm,text=black!60,anchor=north},
+  dimn/.style={<->,gray!70!black,thin}
+}
+
+%================= 1. bolt shear (elevation) =================
+\def\x{0}
+\fill[plate]  (\x-1.65,0.06) rectangle (\x+0.75,0.62);
+\fill[plate2] (\x-0.75,-0.62) rectangle (\x+1.65,-0.06);
+\draw[black!60,thick] (\x-1.65,0.06) rectangle (\x+0.75,0.62);
+\draw[black!60,thick] (\x-0.75,-0.62) rectangle (\x+1.65,-0.06);
+% bolt, sheared: upper part displaced left, lower part right
+\fill[blt] (\x-0.34,0.62) rectangle (\x+0.26,0.92);     % head
+\fill[blt] (\x-0.22,0.06) rectangle (\x+0.14,0.62);     % upper shank
+\fill[blt] (\x-0.08,-0.62) rectangle (\x+0.28,-0.06);   % lower shank, offset
+\fill[blt] (\x-0.20,-0.92) rectangle (\x+0.40,-0.62);   % nut
+\draw[fail] (\x-0.26,0) -- (\x+0.34,0);
+\draw[ld] (\x-2.15,0.34) -- (\x-1.70,0.34);
+\draw[ld] (\x+2.15,-0.34) -- (\x+1.70,-0.34);
+\node[ttl] at (\x,-1.45) {1. Bolt shear};
+\node[frm] at (\x,-1.92) {$P_s=\dfrac{\pi D^{2}}{4}\,F_{su}$};
+\node[sub] at (\x,-2.72) {double it for double shear. If a \emph{thread} lies in the plane, use
+$A_t$, not $\pi D^2/4$.};
+
+%================= 2. bearing (plan) =================
+\def\x{5.0}
+\fill[plate] (\x-1.70,-0.80) rectangle (\x+1.70,0.80);
+\draw[black!60,thick] (\x-1.70,-0.80) rectangle (\x+1.70,0.80);
+\fill[crush] (\x-0.30,-0.30) rectangle (\x+0.26,0.30);
+\fill[white,draw=blue!60!black,thick] (\x+0.26,0) circle (0.30);
+\draw[fail] (\x+0.26,0.30) -- (\x-0.30,0.30) (\x+0.26,-0.30) -- (\x-0.30,-0.30);
+\draw[ld] (\x+1.10,0) -- (\x+1.70,0);
+\node[font=\tiny,text=red!65!black,anchor=south] at (\x-0.55,0.36) {hole crushes};
+\node[ttl] at (\x,-1.45) {2. Bearing};
+\node[frm] at (\x,-1.92) {$P_{br}= D\,t\,F_{bru}$};
+\node[sub] at (\x,-2.72) {$F_{bru}$ is tabulated \emph{at} an $e/D$ --- which is how shear-out is
+usually taken care of.};
+
+%================= 3. net tension (plan) =================
+\def\x{10.0}
+\fill[plate] (\x-1.70,-0.80) rectangle (\x+1.70,0.80);
+\draw[black!60,thick] (\x-1.70,-0.80) rectangle (\x+1.70,0.80);
+\fill[white,draw=blue!60!black,thick] (\x,0) circle (0.30);
+\draw[fail] (\x,0.30) -- (\x,0.80);
+\draw[fail] (\x,-0.30) -- (\x,-0.80);
+\draw[ld] (\x-1.20,0) -- (\x-1.90,0);
+\draw[ld] (\x+1.20,0) -- (\x+1.90,0);
+\draw[dimn] (\x+1.95,-0.80) -- (\x+1.95,0.80);
+\node[font=\tiny,anchor=west,text=gray!60!black] at (\x+2.02,0) {$w$};
+\node[ttl] at (\x,-1.45) {3. Net tension};
+\node[frm] at (\x,-1.92) {$P_t=(w-D)\,t\,F_{tu}$};
+\node[sub] at (\x,-2.72) {the \emph{plate} fails, not the fastener. Pitch is what buys you
+$w$.};
+
+%================= 4. shear-out (plan) =================
+\def\x{15.0}
+\fill[plate] (\x-1.70,-0.80) rectangle (\x+1.00,0.80);
+\draw[black!60,thick] (\x-1.70,-0.80) rectangle (\x+1.00,0.80);
+\fill[white,draw=blue!60!black,thick] (\x+0.16,0) circle (0.30);
+\fill[red!14] (\x+0.16,0.30) rectangle (\x+1.00,-0.30);
+\draw[fail] (\x+0.16,0.30) -- (\x+1.00,0.30);
+\draw[fail] (\x+0.16,-0.30) -- (\x+1.00,-0.30);
+\draw[ld] (\x+1.10,0) -- (\x+1.80,0);
+\draw[dimn] (\x+0.16,-1.02) -- (\x+1.00,-1.02);
+\node[font=\tiny,anchor=north,text=gray!60!black] at (\x+0.58,-1.05) {$e$};
+\node[ttl] at (\x,-1.45) {4. Shear-out};
+\node[frm] at (\x,-1.92) {$P_{so}=2\left(e-\tfrac{D}{2}\right)t\,F_{su}$};
+\node[sub] at (\x,-2.72) {the plug tears to the free edge. This is what the edge-distance rule
+exists to prevent.};
+
+\node[font=\footnotesize,align=center,text width=17.0cm,anchor=north] at (7.5,-3.75)
+ {\textbf{All four must be checked, and the smallest margin is the joint.} Modes 1 and 2 are
+  per fastener; modes 3 and 4 belong to the \emph{plate}. Modes 3 and 4 are the ones the layout
+  rules --- pitch and edge distance --- are designed to push out of contention, so that a
+  well-laid-out joint fails in bearing or bolt shear, where the strength is predictable.};
+
+\end{tikzpicture}

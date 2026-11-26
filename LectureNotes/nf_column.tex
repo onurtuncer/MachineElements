@@ -1,0 +1,44 @@
+% A jackscrew is a column whose length changes as it works.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  scr/.style={fill=blue!10,draw=blue!55!black,thick},
+  hous/.style={fill=black!14,draw=black!55,thick},
+  ld/.style={->,red!70!black,line width=1.3pt},
+  dimn/.style={<->,gray!75!black,thin},
+  lb/.style={font=\scriptsize,align=center,text width=3.6cm,anchor=north},
+  ttl/.style={font=\small\bfseries,anchor=south}
+}
+% \jack{x}{free length}{label}
+\newcommand{\jack}[3]{%
+  % housing / nut block
+  \fill[hous] (#1-0.80,0) rectangle (#1+0.80,1.10);
+  \draw[black!55,thick] (#1-0.80,0) rectangle (#1+0.80,1.10);
+  \node[font=\tiny,text=black!60,anchor=east] at (#1-0.86,0.55) {nut};
+  % ground
+  \draw[black!60,thick] (#1-1.05,0) -- (#1+1.05,0);
+  \foreach \k in {-0.9,-0.6,...,0.95}{\draw[black!50,thin] (#1+\k,0) -- (#1+\k-0.18,-0.22);}
+  % screw, from inside the nut up through the free length
+  \draw[scr] (#1-0.17,0.20) rectangle (#1+0.17,1.10+#2);
+  \foreach \k in {0,1,...,40}{
+    \pgfmathsetmacro\yy{0.30+0.13*\k}
+    \ifdim\yy pt<1.10pt \draw[blue!55!black,thin] (#1-0.17,\yy) -- (#1+0.17,\yy-0.065);\fi}
+  % platform and load
+  \fill[blue!10,draw=blue!55!black,thick] (#1-0.62,1.10+#2) rectangle (#1+0.62,1.26+#2);
+  \draw[ld] (#1,2.15+#2) -- (#1,1.30+#2);
+  \node[font=\scriptsize,text=red!70!black,anchor=south] at (#1,2.18+#2) {$F$};
+  % free length dimension
+  \draw[dimn] (#1+0.95,1.10) -- (#1+0.95,1.10+#2);
+  \node[font=\scriptsize,anchor=west,text=gray!60!black] at (#1+1.00,1.10+#2/2) {$L$};
+  \node[lb] at (#1,-0.45) {#3};
+}
+
+\jack{0}{1.25}{\textbf{retracted}\\ short column, no concern}
+\jack{5.2}{3.70}{\textbf{extended}\\ same screw, same load --- and
+$P_{cr}$ has fallen by a factor of nearly $9$}
+
+% the point, between the two
+\node[font=\small,align=center,text width=3.4cm] at (2.6,3.4)
+ {$P_{cr}\propto \dfrac{1}{L^{2}}$\\[3pt] \scriptsize so the check belongs at \emph{full extension}, not at the drawing position};
+\draw[->,black!55,thick] (1.60,2.05) -- (3.60,2.05);
+
+\end{tikzpicture}

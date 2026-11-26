@@ -1,0 +1,54 @@
+% Load transfer along a row of five fasteners. Values from a direct-stiffness model,
+% identical 2024-T3 plates, k_f/k_p = 0.70.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  pa/.style={fill=black!10,draw=black!60,thick},
+  pb/.style={fill=black!20,draw=black!60,thick},
+  blt/.style={fill=blue!18,draw=blue!60!black,thick},
+  ld/.style={->,black!75,line width=1.3pt},
+  lb/.style={font=\scriptsize},
+  sm/.style={font=\tiny,text=black!60}
+}
+\def\s{2.1}       % fastener spacing on the drawing
+
+% ================= the splice =================
+\begin{scope}[yshift=0cm]
+\fill[pa] (-2.2,0.10) rectangle (9.2,0.70);
+\draw[black!60,thick] (-2.2,0.10) rectangle (9.2,0.70);
+\fill[pb] (-0.8,-0.70) rectangle (10.6,-0.10);
+\draw[black!60,thick] (-0.8,-0.70) rectangle (10.6,-0.10);
+\foreach \i in {0,1,2,3,4}{
+  \pgfmathsetmacro\xx{\i*\s}
+  \fill[blt] (\xx-0.17,-0.86) rectangle (\xx+0.17,0.86);
+  \node[sm,anchor=south] at (\xx,0.95) {\the\numexpr\i+1\relax};
+}
+\draw[ld] (-3.1,0.40) -- (-2.3,0.40);
+\node[lb,anchor=east] at (-3.2,0.40) {$P$};
+\draw[ld] (10.7,-0.40) -- (11.5,-0.40);
+\node[lb,anchor=west] at (11.6,-0.40) {$P$};
+\node[sm,anchor=east] at (-2.3,0.95) {plate A};
+\node[sm,anchor=west] at (10.7,-0.95) {plate B};
+\end{scope}
+
+% ================= the bar chart =================
+\begin{scope}[yshift=-5.6cm]
+\def\h{0.105}      % percent -> cm
+\draw[->,black!70] (-0.9,0) -- (9.5,0);
+\draw[->,black!70] (-0.9,0) -- (-0.9,4.6);
+\node[lb,anchor=south,rotate=90] at (-2.05,2.3) {share of the load transferred};
+\foreach \p in {0,10,20,30}{
+  \draw[black!60] (-0.95,\p*\h) -- (-0.9,\p*\h);
+  \node[sm,anchor=east] at (-0.98,\p*\h) {\p\,\%};}
+% equal-share reference
+\draw[dashed,black!55] (-0.9,20*\h) -- (9.3,20*\h);
+\node[sm,anchor=west,fill=white,inner sep=1pt] at (6.25,20*\h+0.17) {equal share, $P/5$};
+% bars
+\foreach \i/\v in {0/34.2, 1/12.2, 2/7.2, 3/12.2, 4/34.2}{
+  \pgfmathsetmacro\xx{\i*\s}
+  \fill[blue!45!black,opacity=0.78] (\xx-0.46,0) rectangle (\xx+0.46,\v*\h);
+  \draw[blue!45!black] (\xx-0.46,0) rectangle (\xx+0.46,\v*\h);
+  \node[lb,anchor=south] at (\xx,\v*\h+0.04) {\v\,\%};
+  \node[sm,anchor=north] at (\xx,-0.08) {\the\numexpr\i+1\relax};}
+\end{scope}
+
+\end{tikzpicture}

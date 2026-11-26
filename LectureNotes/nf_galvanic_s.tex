@@ -1,0 +1,37 @@
+% Simplified galvanic series, with the three pairings that matter in airframes.
+\begin{tikzpicture}[>=Latex]
+\tikzset{
+  mt/.style={font=\small,anchor=west},
+  tick/.style={black!60,thin},
+  good/.style={draw=green!45!black,line width=1.1pt},
+  bad/.style={draw=red!70!black,line width=1.1pt},
+  gl/.style={font=\scriptsize,align=left,text width=5.0cm,anchor=west,text=green!35!black},
+  bl/.style={font=\scriptsize,align=left,text width=5.0cm,anchor=west,text=red!65!black}
+}
+\def\W{0.85}
+
+% ---- the strip ----
+\shade[top color=red!55,bottom color=blue!55] (0,0) rectangle (\W,10.4);
+\draw[black!60] (0,0) rectangle (\W,10.4);
+\node[font=\scriptsize\bfseries,text=red!65!black,anchor=south,align=center] at (\W/2,10.55) {ANODIC\\[-1pt] \mdseries\itshape this one corrodes};
+\node[font=\scriptsize\bfseries,text=blue!60!black,anchor=north,align=center] at (\W/2,-0.15) {CATHODIC\\[-1pt] \mdseries\itshape this one is protected};
+
+% ---- members ----
+\foreach \y/\n in {
+  10.0/{Magnesium},
+   9.2/{Zinc},
+   8.5/{Aluminium 1100},
+   8.0/{\textbf{Cadmium plating}},
+   7.4/{Aluminium 2024, 7075},
+   6.3/{Carbon and low-alloy steel},
+   5.0/{300-series CRES \emph{(passive)}},
+   4.2/{A286},
+   3.3/{\textbf{Titanium Ti-6Al-4V}},
+   2.3/{\textbf{Graphite --- CFRP}},
+   1.0/{Gold}}
+{
+  \draw[tick] (\W,\y) -- (\W+0.22,\y);
+  \node[mt] at (\W+0.28,\y) {\n};
+}
+
+\end{tikzpicture}

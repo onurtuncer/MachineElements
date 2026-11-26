@@ -1,0 +1,57 @@
+% Simplified galvanic series, with the three pairings that matter in airframes.
+\begin{tikzpicture}[>=Latex]
+\tikzset{
+  mt/.style={font=\small,anchor=west},
+  tick/.style={black!60,thin},
+  good/.style={draw=green!45!black,line width=1.1pt},
+  bad/.style={draw=red!70!black,line width=1.1pt},
+  gl/.style={font=\scriptsize,align=left,text width=5.0cm,anchor=west,text=green!35!black},
+  bl/.style={font=\scriptsize,align=left,text width=5.0cm,anchor=west,text=red!65!black}
+}
+\def\W{0.85}
+
+% ---- the strip ----
+\shade[top color=red!55,bottom color=blue!55] (0,0) rectangle (\W,10.4);
+\draw[black!60] (0,0) rectangle (\W,10.4);
+\node[font=\scriptsize\bfseries,text=red!65!black,anchor=south,align=center] at (\W/2,10.55) {ANODIC\\[-1pt] \mdseries\itshape this one corrodes};
+\node[font=\scriptsize\bfseries,text=blue!60!black,anchor=north,align=center] at (\W/2,-0.15) {CATHODIC\\[-1pt] \mdseries\itshape this one is protected};
+
+% ---- members ----
+\foreach \y/\n in {
+  10.0/{Magnesium},
+   9.2/{Zinc},
+   8.5/{Aluminium 1100},
+   8.0/{\textbf{Cadmium plating}},
+   7.4/{Aluminium 2024, 7075},
+   6.3/{Carbon and low-alloy steel},
+   5.0/{300-series CRES \emph{(passive)}},
+   4.2/{A286},
+   3.3/{\textbf{Titanium Ti-6Al-4V}},
+   2.3/{\textbf{Graphite --- CFRP}},
+   1.0/{Gold}}
+{
+  \draw[tick] (\W,\y) -- (\W+0.22,\y);
+  \node[mt] at (\W+0.28,\y) {\n};
+}
+
+% ---- pairings ----
+% (1) titanium in CFRP -- adjacent
+\draw[good] (-0.45,3.3) -- (-0.75,3.3) -- (-0.75,2.3) -- (-0.45,2.3);
+\node[gl] at (-6.55,2.8) {\textbf{Titanium in CFRP.} Almost no driving voltage --- which is the whole reason Ti-6Al-4V is \emph{the} composite fastener.};
+% (2) aluminium in CFRP -- far apart, and the fastener is the small part
+\draw[bad] (-1.30,7.4) -- (-1.70,7.4) -- (-1.70,2.3) -- (-1.30,2.3);
+\node[bl] at (-7.35,5.1) {\textbf{Aluminium in CFRP.} Far apart \emph{and} the wrong way round: a small aluminium fastener is the \textbf{anode}, the whole carbon panel is the \textbf{cathode}. ``The small anode \dots\ to large cathode \dots\ accelerates the corrosion.''};
+% (3) cadmium next to aluminium
+\draw[good] (-0.45,8.0) -- (-0.75,8.0) -- (-0.75,7.4) -- (-0.45,7.4);
+\node[gl] at (-6.55,8.6) {\textbf{Cadmium-plated steel in aluminium.} Cadmium sits \emph{beside} the aluminium alloys. That is what the plating is for --- not decoration.};
+
+% ---- the two rules ----
+\node[font=\footnotesize,align=left,text width=6.6cm,anchor=north west] at (-7.9,0.25)
+ {\textbf{Rule 1.} ``The farther apart two materials are in the \dots\ list, the greater the
+  galvanic action between them.''\\[3pt]
+  \textbf{Rule 2.} ``Because the anode is eroded in a galvanic cell, \emph{it should be the larger
+  mass in the cell}.'' A fastener is always the small part --- so the \textbf{fastener must be the
+  cathode}.\\[3pt]
+  {\scriptsize Both: NASA RP-1228.}};
+
+\end{tikzpicture}

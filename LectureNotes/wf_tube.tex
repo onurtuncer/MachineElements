@@ -1,0 +1,22 @@
+% Three ways to join a 4130 tube end, and why the angle of the weld matters.
+\begin{tikzpicture}[line join=round,>=Latex]
+\tikzset{tb/.style={fill=black!10,draw=black,line width=0.7pt}, wl/.style={black,line width=2.4pt,line cap=round},
+  ttl/.style={font=\normalsize\bfseries,anchor=north}, sub/.style={font=\small,anchor=north,text=black!65,align=center}}
+\begin{scope}
+ \path[tb] (-2.2,0) rectangle (2.2,0.9); \draw[wl] (0,0) -- (0,0.9);
+ \draw[->,line width=0.9pt] (2.3,0.45) -- (3.0,0.45); \draw[->,line width=0.9pt] (-2.3,0.45) -- (-3.0,0.45);
+ \node[ttl] at (0,-0.3) {Square butt}; \node[sub] at (0,-0.85) {the whole heat-affected band lies\\ across the load};
+\end{scope}
+\begin{scope}[xshift=6.6cm]
+ \path[tb] (-2.2,0) rectangle (2.2,0.9); \draw[wl] (-0.78,0) -- (0.78,0.9);
+ \draw[line width=0.4pt] (-0.78,0) ++(0.9,0) arc[start angle=0,end angle=30,radius=0.9]; \node[font=\scriptsize] at (0.55,0.2) {$30^\circ$};
+ \draw[->,line width=0.9pt] (2.3,0.45) -- (3.0,0.45); \draw[->,line width=0.9pt] (-2.3,0.45) -- (-3.0,0.45);
+ \node[ttl] at (0,-0.3) {Scarf, $30^\circ$ or less}; \node[sub] at (0,-0.85) {longer weld, and no section\\ is all heat-affected};
+\end{scope}
+\begin{scope}[xshift=13.2cm]
+ \path[tb] (-2.2,0) rectangle (2.2,0.9);
+ \draw[wl] (0.9,0.9) -- (-0.6,0.45) -- (0.9,0);
+ \draw[->,line width=0.9pt] (2.3,0.45) -- (3.0,0.45); \draw[->,line width=0.9pt] (-2.3,0.45) -- (-3.0,0.45);
+ \node[ttl] at (0,-0.3) {Fishmouth}; \node[sub] at (0,-0.85) {the scarf, folded: the usual\\ splice and sleeve end};
+\end{scope}
+\end{tikzpicture}

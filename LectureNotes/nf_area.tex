@@ -1,0 +1,30 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize,line join=round]
+% M10 x 1.5 : d=10, d2=9.026, d3=8.160  (radii scaled x0.26)
+\def\sc{0.26}
+\begin{scope}
+\fill[blue!16] (0,0) circle (\sc*4.513);
+\draw[thick,dashed,gray!60!black] (0,0) circle (\sc*5.0);
+\draw[thick,blue!55!black] (0,0) circle (\sc*4.513);
+\draw[thick,red!70!black] (0,0) circle (\sc*4.080);
+\draw[->] (0,0) -- (55:\sc*5.0); \node[anchor=south west,font=\tiny] at (55:\sc*5.05) {$d/2$};
+\draw[->] (0,0) -- (165:\sc*4.513); \node[anchor=east,font=\tiny,blue!55!black] at (165:\sc*4.6) {$d_2/2$};
+\draw[->] (0,0) -- (285:\sc*4.080); \node[anchor=north west,font=\tiny,red!70!black] at (285:\sc*4.15) {$d_3/2$};
+\node[anchor=north,align=center,font=\tiny] at (0,-\sc*6.4) {M10$\times$1.5\\ section};
+\end{scope}
+\begin{scope}[xshift=4.2cm,yshift=-0.1cm]
+\node[anchor=west,align=left] at (0,0.95)
+ {\textbf{Three areas you could use}};
+\node[anchor=west,align=left,font=\small] at (0,0.3)
+ {$A_{\text{major}}=\frac{\pi}{4}d^2$ \ \ $=\SI{78.5}{mm^2}$};
+\node[anchor=west,align=left,font=\small,blue!55!black] at (0,-0.25)
+ {$\mathbf{A_t}$ \ (stress area) $=\SI{58.0}{mm^2}$};
+\node[anchor=west,align=left,font=\small,red!70!black] at (0,-0.80)
+ {$A_{\text{minor}}=\frac{\pi}{4}d_3^2=\SI{52.3}{mm^2}$};
+\node[anchor=west,align=left,font=\tiny,text width=6.4cm] at (0,-1.75)
+ {The fracture surface is not a flat disc at the root --- it follows a
+  \emph{helical} path that crosses the thread. $A_t$ is the empirical area that
+  makes $\sigma = F/A_t$ predict the measured strength. It lies between the
+  other two, nearer the minor.};
+\end{scope}
+\end{tikzpicture}

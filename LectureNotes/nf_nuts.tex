@@ -1,0 +1,114 @@
+% Nut types and how each one is locked.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  steel/.style={fill=blue!8,draw=blue!55!black,thick},
+  nutf/.style={fill=blue!14,draw=blue!55!black,thick},
+  nylon/.style={fill=orange!35,draw=orange!70!black,thick},
+  plate/.style={fill=black!10,draw=black!55},
+  pin/.style={draw=red!65!black,line width=1.1pt},
+  lbl/.style={font=\scriptsize\bfseries,align=center,text width=3.1cm,anchor=north},
+  sub/.style={font=\tiny\itshape,align=center,text width=3.1cm,text=black!60,anchor=north},
+  ar/.style={->,red!65!black,thin}
+}
+% \bolt{x}{top y}
+\newcommand{\bolt}[2]{%
+  \draw[steel] (#1-0.34,-0.58) rectangle (#1+0.34,#2);
+  \foreach \k in {0,1,...,11}{%
+    \pgfmathsetmacro\yy{-0.50+0.145*\k}
+    \ifdim\yy pt<#2 pt \draw[blue!55!black,thin] (#1-0.34,\yy) -- (#1+0.34,\yy-0.07);\fi}
+}
+\newcommand{\plat}[1]{\fill[plate] (#1-1.15,-0.58) rectangle (#1+1.15,0);
+  \draw[black!55] (#1-1.15,-0.58) -- (#1-0.34,-0.58) (#1+0.34,-0.58) -- (#1+1.15,-0.58);
+  \draw[black!55] (#1-1.15,0) -- (#1-0.34,0) (#1+0.34,0) -- (#1+1.15,0);}
+% castellations on top of a nut: {x}{base y}{top y}
+\newcommand{\castle}[3]{%
+  \foreach \c in {-0.58,-0.20,0.20}{
+    \fill[nutf] (#1+\c,#2) rectangle (#1+\c+0.26,#3);}
+  \fill[nutf] (#1+0.58,#2) rectangle (#1+0.72,#3);
+  \fill[nutf] (#1-0.72,#2) rectangle (#1-0.58,#3);}
+
+%============ 1. plain hex ============
+\def\x{0}
+\plat{\x}\bolt{\x}{0.80}
+\fill[nutf] (\x-0.72,0) rectangle (\x+0.72,0.62);
+\draw[blue!55!black,thick] (\x-0.72,0) rectangle (\x+0.72,0.62);
+\node[lbl] at (\x,-1.05) {plain hex\\ \mdseries AN315};
+\node[sub] at (\x,-1.72) {carries the load and nothing else. \textbf{Needs a separate locking device} --- a checknut, or wire.};
+
+%============ 2. castle nut + cotter pin ============
+\def\x{3.5}
+\plat{\x}\bolt{\x}{1.08}
+\fill[nutf] (\x-0.72,0) rectangle (\x+0.72,0.60);
+\draw[blue!55!black,thick] (\x-0.72,0) rectangle (\x+0.72,0.60);
+\castle{\x}{0.60}{0.96}
+\draw[blue!55!black,thick] (\x-0.72,0.60) -- (\x+0.72,0.60);
+\draw[pin] (\x-0.62,0.78) -- (\x+0.62,0.78);
+\draw[pin] (\x+0.62,0.78) -- (\x+0.74,0.62);
+\draw[pin] (\x-0.62,0.78) -- (\x-0.74,0.62);
+\node[lbl] at (\x,-1.05) {castle nut\\ \mdseries AN310 --- tension};
+\node[sub] at (\x,-1.72) {drilled bolt, cotter pin through the slot. \textbf{Positive locking}: it cannot undo.};
+
+%============ 3. castellated shear nut ============
+\def\x{7.0}
+\plat{\x}\bolt{\x}{0.80}
+\fill[nutf] (\x-0.72,0) rectangle (\x+0.72,0.30);
+\draw[blue!55!black,thick] (\x-0.72,0) rectangle (\x+0.72,0.30);
+\castle{\x}{0.30}{0.62}
+\draw[blue!55!black,thick] (\x-0.72,0.30) -- (\x+0.72,0.30);
+\draw[pin] (\x-0.62,0.46) -- (\x+0.62,0.46);
+\draw[pin] (\x+0.62,0.46) -- (\x+0.74,0.30);
+\draw[pin] (\x-0.62,0.46) -- (\x-0.74,0.30);
+\node[lbl] at (\x,-1.05) {shear nut\\ \mdseries AN320 --- shear only};
+\node[sub] at (\x,-1.72) {thinner, so fewer threads. \textbf{Lower torque values} --- it is not a tension nut.};
+
+%============ 4. fibre / nylon insert ============
+\def\x{10.5}
+\plat{\x}\bolt{\x}{0.92}
+\fill[nutf] (\x-0.72,0) rectangle (\x+0.72,0.52);
+\draw[blue!55!black,thick] (\x-0.72,0) rectangle (\x+0.72,0.52);
+\fill[nylon] (\x-0.72,0.52) rectangle (\x+0.72,0.76);
+\draw[orange!70!black,thick] (\x-0.72,0.52) rectangle (\x+0.72,0.76);
+\node[font=\tiny,text=orange!60!black,anchor=west] at (\x+0.78,0.64) {nylon};
+\draw[ar] (\x-0.95,0.64) -- (\x-0.76,0.64);
+\node[lbl] at (\x,-1.05) {nylon insert\\ \mdseries AN365 / MS20365};
+\node[sub] at (\x,-1.72) {the bolt cuts its own thread in the collar. \textbf{Not above \SI{250}{\degree F}}, and one thread must show.};
+
+%============ 5. all-metal self-locking ============
+\def\x{14.0}
+\plat{\x}\bolt{\x}{0.92}
+\fill[nutf] (\x-0.72,0) rectangle (\x+0.72,0.50);
+\draw[blue!55!black,thick] (\x-0.72,0) rectangle (\x+0.72,0.50);
+\fill[nutf] (\x-0.62,0.50) -- (\x+0.62,0.50) -- (\x+0.54,0.78) -- (\x-0.54,0.78) -- cycle;
+\draw[blue!55!black,thick] (\x-0.62,0.50) -- (\x+0.62,0.50) (\x-0.62,0.50) -- (\x-0.54,0.78)
+  -- (\x+0.54,0.78) -- (\x+0.62,0.50);
+\draw[ar] (\x-1.00,0.66) -- (\x-0.60,0.66);
+\draw[ar] (\x+1.00,0.66) -- (\x+0.60,0.66);
+\node[lbl] at (\x,-1.05) {all-metal\\ \mdseries MS21042};
+\node[sub] at (\x,-1.72) {the crown is deliberately deformed, so it grips elastically. \textbf{High temperature} ---\\ AN361--363 to \SI{550}{\degree F}.};
+
+%============ 6. nutplate / anchor nut ============
+\def\x{17.5}
+% the part being attached (light), on the structure (darker)
+\fill[black!7,draw=black!55] (\x-1.15,0.42) rectangle (\x+1.15,0.80);
+\fill[black!16,draw=black!55] (\x-1.15,0.00) rectangle (\x+1.15,0.42);
+% nutplate: body hanging below, flange pressed to the blind face
+\fill[nutf] (\x-0.58,-0.56) rectangle (\x+0.58,-0.14);
+\draw[blue!55!black,thick] (\x-0.58,-0.56) rectangle (\x+0.58,-0.14);
+\fill[nutf] (\x-1.05,-0.14) rectangle (\x+1.05,0.00);
+\draw[blue!55!black,thick] (\x-1.05,-0.14) rectangle (\x+1.05,0.00);
+% rivets through flange and structure
+\foreach \r in {-0.86,0.86}{
+  \fill[black!50,draw=black!60] (\x+\r-0.08,-0.14) rectangle (\x+\r+0.08,0.42);
+  \fill[black!50] (\x+\r-0.15,0.42) -- (\x+\r+0.15,0.42) -- (\x+\r+0.11,0.52) -- (\x+\r-0.11,0.52) -- cycle;}
+% the bolt, installed from the access side
+\draw[steel] (\x-0.34,0.80) rectangle (\x+0.34,-0.48);
+\foreach \k in {0,1,2}{\draw[blue!55!black,thin] (\x-0.34,-0.40+0.145*\k) -- (\x+0.34,-0.47+0.145*\k);}
+\fill[blue!8,draw=blue!55!black,thick] (\x-0.62,0.80) rectangle (\x+0.62,1.10);
+% access-side arrow
+\draw[ar] (\x+1.55,1.52) -- (\x+0.70,1.14);
+\node[font=\tiny,text=red!65!black,anchor=west,align=left] at (\x+1.50,1.60) {access\\ side};
+\node[font=\tiny,text=black!55,anchor=west] at (\x+1.12,-0.07) {riveted};
+\node[lbl] at (\x,-1.05) {nutplate / anchor nut};
+\node[sub] at (\x,-1.72) {riveted to the \emph{blind} side, so one person can install the bolt from the access side alone.};
+
+\end{tikzpicture}
