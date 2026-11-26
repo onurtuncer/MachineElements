@@ -1,0 +1,123 @@
+% Three fastener families still in aerospace use, each shown before and after installation.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  sh/.style={fill=black!12,draw=black!60,thick},
+  sh2/.style={fill=black!20,draw=black!60,thick},
+  riv/.style={fill=blue!16,draw=blue!60!black,thick},
+  col/.style={fill=orange!30,draw=orange!70!black,thick},
+  stem/.style={fill=black!35,draw=black!55,thin},
+  gone/.style={fill=red!8,draw=red!55,thin,dashed},
+  dimn/.style={<->,gray!70!black,thin},
+  ar/.style={->,red!70!black,line width=1.1pt},
+  ttl/.style={font=\scriptsize\bfseries,align=center,text width=5.0cm,anchor=north},
+  sub/.style={font=\tiny,align=center,text width=5.2cm,text=black!60,anchor=north},
+  st/.style={font=\tiny,text=black!55,align=center}
+}
+\def\D{0.52}          % rivet diameter on the drawing
+
+% two sheets, centred on x
+\newcommand{\sheets}[1]{%
+  \fill[sh]  (#1-1.45,0) rectangle (#1+1.45,0.46);
+  \fill[sh2] (#1-1.45,-0.46) rectangle (#1+1.45,0);
+  \draw[black!60,thick] (#1-1.45,-0.46) rectangle (#1+1.45,0.46);
+  \draw[black!60] (#1-1.45,0) -- (#1+1.45,0);}
+
+%================= 1. solid rivet =================
+\begin{scope}[yshift=0cm]
+% -- before --
+\def\x{0}
+\sheets{\x}
+\fill[white] (\x-\D/2,-0.46) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-\D/2,-1.24) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-0.52,0.46) .. controls (\x-0.52,0.80) and (\x+0.52,0.80) .. (\x+0.52,0.46) -- cycle;
+\draw[blue!60!black,thick] (\x-0.52,0.46) .. controls (\x-0.52,0.80) and (\x+0.52,0.80) .. (\x+0.52,0.46);
+\draw[blue!60!black,thick] (\x-\D/2,0.46) -- (\x-\D/2,-1.24) -- (\x+\D/2,-1.24) -- (\x+\D/2,0.46);
+\draw[dimn] (\x+0.72,-0.46) -- (\x+0.72,-1.24);
+\node[st,anchor=west] at (\x+0.78,-0.85) {$1.5D$};
+\node[st,anchor=north] at (\x,-1.55) {before};
+% -- after --
+\def\x{3.3}
+\sheets{\x}
+\fill[white] (\x-\D/2,-0.46) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-\D/2,-0.46) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-0.52,0.46) .. controls (\x-0.52,0.80) and (\x+0.52,0.80) .. (\x+0.52,0.46) -- cycle;
+\draw[blue!60!black,thick] (\x-0.52,0.46) .. controls (\x-0.52,0.80) and (\x+0.52,0.80) .. (\x+0.52,0.46);
+% the shop head: 1.5D wide, 0.5D high
+\fill[riv] (\x-0.75*\D,-0.46) rectangle (\x+0.75*\D,-0.46-0.5*\D);
+\draw[blue!60!black,thick] (\x-0.75*\D,-0.46) rectangle (\x+0.75*\D,-0.46-0.5*\D);
+\draw[blue!60!black,thick] (\x-\D/2,0.46) -- (\x-\D/2,-0.46) (\x+\D/2,0.46) -- (\x+\D/2,-0.46);
+\draw[dimn] (\x-0.75*\D,-0.92) -- (\x+0.75*\D,-0.92);
+\node[st,anchor=north] at (\x,-0.95) {$1.5D$};
+\draw[dimn] (\x+0.95,-0.46) -- (\x+0.95,-0.46-0.5*\D);
+\node[st,anchor=west] at (\x+1.00,-0.59) {$0.5D$};
+\node[st,anchor=north] at (\x,-1.55) {driven};
+\node[ttl] at (1.65,-2.15) {Solid rivet};
+\end{scope}
+
+%================= 2. blind rivet =================
+\begin{scope}[xshift=6.6cm]
+% -- before --
+\def\x{0}
+\sheets{\x}
+\fill[white] (\x-\D/2,-0.46) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-\D/2,-0.95) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-0.60,0.46) rectangle (\x+0.60,0.72);
+\draw[blue!60!black,thick] (\x-0.60,0.46) rectangle (\x+0.60,0.72);
+\draw[blue!60!black,thick] (\x-\D/2,0.46) -- (\x-\D/2,-0.95) -- (\x+\D/2,-0.95) -- (\x+\D/2,0.46);
+\fill[stem] (\x-0.10,-1.05) rectangle (\x+0.10,1.55);
+\node[st,anchor=west] at (\x+0.22,1.30) {stem};
+\node[st,anchor=north] at (\x,-1.55) {before};
+% -- after --
+\def\x{3.3}
+\sheets{\x}
+\fill[white] (\x-\D/2,-0.46) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-\D/2,-0.46) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-0.60,0.46) rectangle (\x+0.60,0.72);
+\draw[blue!60!black,thick] (\x-0.60,0.46) rectangle (\x+0.60,0.72);
+% bulbed blind head
+\fill[riv] (\x-0.46,-0.46) .. controls (\x-0.80,-0.78) and (\x+0.80,-0.78) .. (\x+0.46,-0.46) -- cycle;
+\draw[blue!60!black,thick] (\x-0.46,-0.46) .. controls (\x-0.80,-0.78) and (\x+0.80,-0.78) .. (\x+0.46,-0.46);
+\draw[blue!60!black,thick] (\x-\D/2,0.46) -- (\x-\D/2,-0.46) (\x+\D/2,0.46) -- (\x+\D/2,-0.46);
+\fill[col] (\x-0.14,0.46) rectangle (\x+0.14,0.72);
+\draw[orange!70!black,thick] (\x-0.14,0.46) rectangle (\x+0.14,0.72);
+\fill[stem] (\x-0.10,-0.30) rectangle (\x+0.10,0.72);
+\node[st,anchor=west,align=left] at (\x+0.70,0.60) {locking\\ collar};
+\node[st,anchor=west,align=left] at (\x+0.70,-0.70) {bulbed\\ blind head};
+\node[st,anchor=north] at (\x,-1.55) {set, stem snapped off};
+\node[ttl] at (1.65,-2.15) {Blind rivet};
+\end{scope}
+
+%================= 3. Hi-Lok =================
+\begin{scope}[xshift=13.2cm]
+% -- before --
+\def\x{0}
+\sheets{\x}
+\fill[white] (\x-\D/2,-0.46) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-\D/2,-1.30) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-0.58,0.46) rectangle (\x+0.58,0.74);
+\draw[blue!60!black,thick] (\x-0.58,0.46) rectangle (\x+0.58,0.74);
+\draw[blue!60!black,thick] (\x-\D/2,0.46) -- (\x-\D/2,-1.30) -- (\x+\D/2,-1.30) -- (\x+\D/2,0.46);
+\foreach \k in {0,1,...,4}{\draw[blue!60!black,thin] (\x-\D/2,-0.66-0.13*\k) -- (\x+\D/2,-0.72-0.13*\k);}
+\fill[white,draw=blue!60!black,thin] (\x-0.13,-1.30) rectangle (\x+0.13,-1.12);
+\node[st,anchor=west,align=left] at (\x+0.34,-1.22) {hex socket\\ holds the pin};
+\node[st,anchor=north] at (\x,-1.62) {pin};
+% -- after --
+\def\x{3.4}
+\sheets{\x}
+\fill[white] (\x-\D/2,-0.46) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-\D/2,-0.92) rectangle (\x+\D/2,0.46);
+\fill[riv] (\x-0.58,0.46) rectangle (\x+0.58,0.74);
+\draw[blue!60!black,thick] (\x-0.58,0.46) rectangle (\x+0.58,0.74);
+\draw[blue!60!black,thick] (\x-\D/2,0.46) -- (\x-\D/2,-0.92) -- (\x+\D/2,-0.92) -- (\x+\D/2,0.46);
+\fill[col] (\x-0.46,-0.46) rectangle (\x+0.46,-0.88);
+\draw[orange!70!black,thick] (\x-0.46,-0.46) rectangle (\x+0.46,-0.88);
+% the wrenching portion that has broken away
+\fill[gone] (\x-0.40,-0.88) rectangle (\x+0.40,-1.36);
+\draw[red!65!black,line width=1.1pt] (\x-0.46,-0.88) -- (\x+0.46,-0.88);
+\node[st,anchor=west,align=left,text=red!65!black] at (\x+0.52,-1.12)
+  {wrenching part\\ \emph{shears off} at a\\ set preload};
+\node[st,anchor=north] at (\x,-1.62) {collar swaged on};
+\node[ttl] at (1.70,-2.15) {Hi-Lok / lockbolt};
+\end{scope}
+
+\end{tikzpicture}

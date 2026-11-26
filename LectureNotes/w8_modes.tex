@@ -1,0 +1,30 @@
+% The four ways to load an adhesive joint.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{ad/.style={fill=black!12,draw=black,line width=0.6pt}, gl/.style={fill=black!60}, ld/.style={->,line width=1.2pt},
+  ttl/.style={font=\normalsize\bfseries,anchor=north}, sub/.style={font=\small,anchor=north,text=black!65,align=center}}
+% shear
+\begin{scope}
+ \path[ad] (-1.9,0.06) rectangle (0.7,0.42); \path[ad] (-0.7,-0.42) rectangle (1.9,-0.06); \path[gl] (-0.7,-0.06) rectangle (0.7,0.06);
+ \draw[ld] (-1.95,0.24) -- (-2.6,0.24); \draw[ld] (1.95,-0.24) -- (2.6,-0.24);
+ \node[ttl] at (0,-1.75) {Shear}; \node[sub] at (0,-2.2) {the whole area works\\ \textbf{design for this}};
+\end{scope}
+% tension
+\begin{scope}[xshift=5.3cm]
+ \path[ad] (-0.9,0.06) rectangle (0.9,0.9); \path[ad] (-0.9,-0.9) rectangle (0.9,-0.06); \path[gl] (-0.9,-0.06) rectangle (0.9,0.06);
+ \draw[ld] (0,0.95) -- (0,1.55); \draw[ld] (0,-0.95) -- (0,-1.55);
+ \node[ttl] at (0,-1.75) {Tension}; \node[sub] at (0,-2.2) {acceptable if truly uniform ---\\ it rarely is};
+\end{scope}
+% cleavage
+\begin{scope}[xshift=10.2cm]
+ \path[ad] (-1.2,0.06) rectangle (1.2,0.7); \path[ad] (-1.2,-0.7) rectangle (1.2,-0.06); \path[gl] (-1.2,-0.06) rectangle (1.2,0.06);
+ \draw[ld] (-1.0,0.75) -- (-1.0,1.4); \draw[ld] (-1.0,-0.75) -- (-1.0,-1.4);
+ \node[ttl] at (0,-1.75) {Cleavage}; \node[sub] at (0,-2.2) {one edge carries it all\\ \textbf{avoid}};
+\end{scope}
+% peel
+\begin{scope}[xshift=15.0cm]
+ \path[ad] (-1.4,-0.6) rectangle (1.4,-0.06); \path[gl] (-0.3,-0.06) rectangle (1.4,0.04);
+ \draw[line width=3pt,black!45,line cap=butt] (1.4,0.09) -- (-0.3,0.09) .. controls (-0.75,0.12) and (-0.95,0.5) .. (-1.0,1.15);
+ \draw[ld] (-1.0,1.2) -- (-1.0,1.8);
+ \node[ttl] at (0,-1.75) {Peel}; \node[sub] at (0,-2.2) {a line carries it all\\ \textbf{avoid}};
+\end{scope}
+\end{tikzpicture}

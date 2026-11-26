@@ -1,0 +1,37 @@
+% Two ways to hold a windscreen: bolted on from outside (as built) and fitted as a plug from inside.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{frm/.style={fill=black!30,draw=black,line width=0.7pt},
+         scr/.style={fill=blue!10,draw=black,line width=0.7pt},
+         blt/.style={fill=black!65,draw=black,line width=0.5pt},
+         pr/.style={->,red!70!black,line width=1pt}, lab/.style={font=\footnotesize}}
+% ---------- (a) as built ----------
+\begin{scope}
+  \node[lab,anchor=south] at (2.4,4.75) {\textbf{(a) As built: fitted from outside}};
+  \node[lab,black!60] at (0.6,-0.45) {OUTSIDE}; \node[lab,black!60] at (4.0,-0.45) {CABIN};
+  % frame (airframe) on the cabin side, top and bottom members
+  \path[frm] (2.2,4.4) rectangle (2.9,3.3); \path[frm] (2.2,1.1) rectangle (2.9,0);
+  \path[frm] (2.9,4.4) rectangle (4.6,4.0); \path[frm] (2.9,0.4) rectangle (4.6,0);
+  % windscreen on the outside face of the frame
+  \path[scr] (1.3,4.4) rectangle (2.2,0);
+  % bolts: countersunk heads outside, anchor nuts inside
+  \foreach \y in {3.85,0.55}{
+    \path[blt] (1.3,\y+0.22) -- (1.55,\y+0.09) -- (3.25,\y+0.09) -- (3.25,\y-0.09) -- (1.55,\y-0.09) -- (1.3,\y-0.22) -- cycle;
+    \path[fill=black!10,draw=black,line width=0.5pt] (2.9,\y+0.24) rectangle (3.15,\y-0.24);}
+  \foreach \y in {1.5,2.2,2.9}{\draw[pr] (4.4,\y) -- (2.3,\y);}
+  \node[lab,text=red!70!black,anchor=west] at (3.0,2.55) {$\Delta p$};
+  \draw[<-,line width=0.4pt] (3.2,3.62) -- (3.9,3.25); \node[lab,anchor=west] at (3.9,3.2) {anchor nut};
+  \draw[<-,line width=0.4pt] (1.25,0.55) -- (0.5,1.5); \node[lab,anchor=south,align=center] at (0.2,1.5) {90 bolts,\\ all in\\ \textbf{tension}};\node[lab,anchor=south] at (1.75,-0.02) {};
+\end{scope}
+% ---------- (b) plug ----------
+\begin{scope}[xshift=8.2cm]
+  \node[lab,anchor=south] at (2.4,4.75) {\textbf{(b) A plug: fitted from inside}};
+  \node[lab,black!60] at (0.6,-0.45) {OUTSIDE}; \node[lab,black!60] at (4.4,-0.45) {CABIN};
+  \path[frm] (1.5,4.4) rectangle (2.2,3.3); \path[frm] (1.5,1.1) rectangle (2.2,0);
+  \path[frm] (0.2,4.4) rectangle (1.5,4.0); \path[frm] (0.2,0.4) rectangle (1.5,0);
+  \path[scr] (2.2,4.4) rectangle (3.1,0);
+  \foreach \y in {3.85,0.55}{\path[blt] (1.25,\y+0.09) rectangle (3.2,\y-0.09); \path[blt] (3.1,\y+0.2) rectangle (3.3,\y-0.2);}
+  \foreach \y in {1.5,2.2,2.9}{\draw[pr] (5.0,\y) -- (3.2,\y);}
+  \node[lab,text=red!70!black,anchor=west] at (3.9,2.55) {$\Delta p$};
+  \draw[<-,line width=0.4pt] (2.15,3.0) -- (1.2,2.5); \node[lab,anchor=north,align=center] at (0.6,2.75) {pressure\\ seats the\\ screen on\\ the frame};
+\end{scope}
+\end{tikzpicture}

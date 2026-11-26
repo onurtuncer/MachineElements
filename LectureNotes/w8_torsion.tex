@@ -1,0 +1,32 @@
+% Example 8.1: a C-shaped weld group in torsion. 1 mm = 0.035 cm.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{lb/.style={font=\footnotesize}, sm/.style={font=\scriptsize}, dimn/.style={<->,line width=0.4pt}, ext/.style={line width=0.25pt}}
+\def\g{0.035}
+\fill[black!22] (-1.6,-3.2) rectangle (3.3,3.2); \draw[line width=0.6pt] (-1.6,-3.2) rectangle (3.3,3.2);
+\fill[black!8] (0,-60*\g) rectangle (270*\g,60*\g); \draw[line width=0.6pt] (0,-60*\g) rectangle (270*\g,60*\g);
+\draw[line width=2.8pt,line cap=round] (80*\g,60*\g) -- (0,60*\g) -- (0,-60*\g) -- (80*\g,-60*\g);
+% centroid
+\def\xb{22.86}
+\draw[line width=0.3pt] (\xb*\g-0.25,0) -- (\xb*\g+0.25,0) (\xb*\g,-0.25) -- (\xb*\g,0.25); \fill (\xb*\g,0) circle (1.4pt);
+\node[sm,anchor=north west] at (\xb*\g+0.02,-0.04) {G};
+% load
+\draw[->,line width=1.5pt] (250*\g,3.4) -- (250*\g,2.2); \node[lb,anchor=south] at (250*\g,3.4) {$P=\SI{20}{kN}$};
+% radius to A
+\draw[line width=0.5pt,dashed] (\xb*\g,0) -- (80*\g,60*\g); \node[sm,anchor=south east] at (52*\g,31*\g) {$r$};
+\fill (80*\g,60*\g) circle (1.8pt); \node[lb,anchor=south] at (80*\g,60*\g+0.08) {A};
+% vectors at A : tau' down, tau'' perpendicular to r (clockwise): direction (y,-x)/r = (60,-57.14)/82.86
+\def\f{0.024}
+\draw[->,line width=1.0pt] (80*\g,60*\g) -- ++(0,-16.84*\f);
+\draw[->,line width=1.0pt] (80*\g,60*\g) -- ++(70.2*\f,-66.9*\f);
+\draw[->,line width=1.6pt] (80*\g,60*\g) -- ++(70.2*\f,-83.7*\f);
+\node[sm,anchor=east] at (80*\g-0.05,60*\g-0.3) {$\tau'$};
+\node[sm,anchor=south west] at (80*\g+70.2*\f,60*\g-66.9*\f+0.02) {$\tau''$};
+\node[sm,anchor=north west] at (80*\g+70.2*\f,60*\g-83.7*\f-0.02) {$\tau$};
+% dimensions
+\draw[ext] (0,-60*\g-0.1) -- (0,-3.75) (80*\g,-60*\g-0.15) -- (80*\g,-3.75) (250*\g,-60*\g-0.1) -- (250*\g,-4.35) (0,-3.75) -- (0,-4.35);
+\draw[dimn] (0,-3.55) -- (80*\g,-3.55); \node[sm,anchor=north] at (40*\g,-3.57) {80};
+\draw[dimn] (0,-4.15) -- (250*\g,-4.15); \node[sm,anchor=north] at (125*\g,-4.17) {250};
+\draw[ext] (-0.1,60*\g) -- (-2.25,60*\g) (-0.1,-60*\g) -- (-2.25,-60*\g); \draw[dimn] (-2.05,-60*\g) -- (-2.05,60*\g); \node[sm,anchor=east] at (-2.1,0) {120};
+\node[sm,anchor=west] at (3.45,-2.8) {column};
+\node[sm] at (6.3,0) {plate};
+\end{tikzpicture}

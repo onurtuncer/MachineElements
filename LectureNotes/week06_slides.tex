@@ -1,0 +1,820 @@
+\documentclass[aspectratio=169,10pt]{beamer}
+\usetheme{metropolis}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{siunitx}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,patterns}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\sisetup{per-mode=symbol,detect-all}
+\metroset{numbering=fraction,progressbar=frametitle,block=fill}
+\tikzset{capt/.style={text width=5.2cm,align=center}}
+\hypersetup{colorlinks=true,urlcolor=blue!60!black,linkcolor=.}
+\addtobeamertemplate{frametitle}{}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,yshift=-1.5pt,xshift=-6pt] at (current page.north east) {\includegraphics[height=0.7cm]{logos/itu_logo_beyaz.pdf}};
+  \end{tikzpicture}}
+\titlegraphic{\hfill\includegraphics[height=1.6cm]{logos/itu_logo_laci.pdf}}
+
+\title{Lecture 6: Tension and Shear Joints}
+\subtitle{UCK 364E Design of Machine Elements}
+\author{Prof.\ Dr.\ Onur Tunçer}
+\institute{Department of Aeronautical Engineering, Istanbul Technical University}
+\date{Fall 2026}
+
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Today}
+\begin{enumerate}
+  \item Two kinds of joint --- and why they share nothing but hardware
+  \item The joint diagram, and how an external load divides
+  \item Yielding, separation, and the cliff between them
+  \item Fatigue of the preloaded bolt --- and what preload is really for
+  \item Shear joints: four failure modes, four margins
+  \item Edge distance and pitch --- what they are actually protecting
+  \item Why fasteners in a row do not share the load
+  \item Rivets --- and the types still flying
+  \item Eccentric bolt groups
+  \item Combined tension and shear --- and why the grip decides the exponent
+\end{enumerate}
+\end{frame}
+
+\section{Two kinds of joint}
+
+\begin{frame}{Lecture 5 gave you the fastener. This gives you the joint.}
+A bolt that is perfectly specified --- right thread, right class, right preload --- will still fail
+if the joint around it was analysed in the \alert{wrong direction}.
+\vfill
+\centering\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & \textbf{Tension joint} & \textbf{Shear joint}\\
+\midrule
+The load is & along the bolt axis & across it\\
+What carries it & the \emph{clamp}, until it separates & bolt in shear, plate in bearing\\
+Preload is & the whole design variable & not a strength you may count on\\
+You check & yield, separation, fatigue & bolt shear, bearing, net tension, shear-out\\
+Usually governs & fatigue & bearing, or the plate\\
+It fails by & the bolt stretching, the joint opening & the hole elongating, the plate tearing\\
+\bottomrule
+\end{tabular}
+\vfill
+\raggedright
+And one thing in common: a \textbf{fitting factor of 1.15} on every joint, fitting and bearing
+surface, on top of the 1.5 (CS/FAR 25.625).
+\end{frame}
+
+\begin{frame}{Why preload is not a shear strength}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{In tension}
+The preload \textbf{is} the design. The bolt never sees the external load directly --- only $C$ of
+it --- for as long as the joint stays shut.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{In shear}
+Preload stops fretting and keeps the joint rigid. It is \textbf{not} a certifiable load path:
+friction depends on a coefficient nobody can guarantee.
+\vspace{2pt}
+So the bolt bears against the hole, and you size it for bearing.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{The preloaded joint under tension}
+
+\begin{frame}{Everything follows from one picture}
+\centering
+\resizebox{!}{5.5cm}{\input{jf_diagram_s.tex}}
+\vfill
+\raggedright
+Bolt and members must deflect \textbf{together}. That is what splits the external load.
+\end{frame}
+
+\begin{frame}{How the load divides}
+\[
+F_b = F_i + C\,P
+\qquad\qquad
+F_m = F_i - (1-C)\,P
+\qquad\qquad
+C=\frac{k_b}{k_b+k_m}
+\]
+\vfill
+\begin{alertblock}{Look at the signs}
+The \textbf{bolt load barely rises}. The \textbf{clamp force falls fast}.
+\vspace{2pt}
+For the M10 joint of Lecture 5 with $C=0.20$: a \SI{20}{kN} external load adds \SI{4}{kN} to the
+bolt --- and removes \SI{16}{kN} of clamp.
+\end{alertblock}
+\vfill
+\centering
+That asymmetry is the whole subject.
+\end{frame}
+
+\begin{frame}{Two things can go wrong --- and they pull opposite ways}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{Yielding}
+\[ \sigma_b=\frac{F_i+CP}{A_t}\le S_p \]
+\[ n_p=\frac{S_pA_t-F_i}{C\,P} \]
+\vspace{-4pt}
+Raise the preload and this margin \alert{falls}.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Separation}
+\[ F_m=0 \ \Rightarrow\ P_0=\frac{F_i}{1-C} \]
+\[ n_0=\frac{F_i}{P\,(1-C)} \]
+\vspace{-4pt}
+Raise the preload and this margin \alert{rises}.
+\end{block}
+\end{column}
+\end{columns}
+\vfill
+\centering
+The preload is squeezed from both sides. That is why $F_i$ is a \textbf{decision}, not a default.
+\end{frame}
+
+\begin{frame}{Separation is not a serviceability issue. It is a cliff.}
+\begin{alertblock}{A joint that has separated is a different machine}
+The members no longer share the load, so the bolt carries \textbf{all} of $P$ instead of $CP$.
+\vspace{3pt}
+An instant multiplication by $1/C$ --- typically \textbf{four to eight times}.
+\vspace{3pt}
+Everything you calculated about fatigue is void from that moment.
+\end{alertblock}
+\vfill
+\centering
+\large We will put a number on this in two slides.
+\end{frame}
+
+\section{Fatigue of the preloaded joint}
+
+\begin{frame}{The calculation Lecture 5 kept deferring}
+External load fluctuating $0 \to P$. The bolt sees only $C$ of it:
+\[
+\sigma_a=\frac{C\,P}{2A_t},\qquad \sigma_i=\frac{F_i}{A_t},\qquad \sigma_m=\sigma_a+\sigma_i
+\]
+\vfill
+The load line starts at $(\sigma_i,0)$ and rises at \textbf{45\textdegree} --- every increment of
+alternating stress brings an equal increment of mean stress. Intersect with Goodman:
+\[
+\frac{\sigma_a}{S_e}+\frac{\sigma_i+\sigma_a}{S_{ut}}=1
+\quad\Longrightarrow\quad
+\sigma_{a,\text{lim}}=\frac{S_e(S_{ut}-\sigma_i)}{S_{ut}+S_e}
+\]
+\vfill
+\centering
+\[
+n_f=\frac{S_e\,(S_{ut}-\sigma_i)}{\sigma_a\,(S_{ut}+S_e)}
+\]
+\end{frame}
+
+\begin{frame}{The thing everyone gets backwards}
+\begin{center}\Large
+$\sigma_a = \dfrac{CP}{2A_t}$ \qquad \alert{contains no $F_i$}
+\end{center}
+\vfill
+Once the joint is closed, \textbf{increasing the preload does not reduce the alternating stress}.
+It only raises the mean stress --- which by Goodman makes $n_f$ slightly \emph{worse}.
+\vfill
+\begin{alertblock}{So why preload hard?}
+Because of the cliff. Preload's job is to \textbf{guarantee the joint never opens}, and the
+alternating stress is small only while that is true.
+\vspace{2pt}
+Preload does not reduce the fatigue load. It protects the condition under which the fatigue load is
+small. \emph{Only the second statement is true.}
+\end{alertblock}
+\vfill
+\centering
+What \emph{does} reduce $\sigma_a$ is reducing $C$: a longer, more slender bolt; stiffer members; a washer.
+\end{frame}
+
+\begin{frame}{Example 6.1 --- the M10 joint, now with an external load}
+M10$\times$1.5 class 10.9. $A_t=\SI{58}{mm^2}$, $S_p=\SI{830}{MPa}$, $S_{ut}=\SI{1040}{MPa}$,
+$S_e=\SI{162}{MPa}$. \ $k_b=485$, $k_m=\SI{1936}{kN/mm} \Rightarrow C=0.200$.
+\ $F_i=0.75F_p=\SI{36.1}{kN}$. \ External load $0\to P=\SI{20}{kN}$.
+\vfill
+\begin{columns}[T]
+\begin{column}{0.47\textwidth}
+\begin{block}{Static}
+$F_b = 36.1+0.2(20)=\SI{40.1}{kN}$
+\vspace{2pt}
+$n_p=\dfrac{48.1-36.1}{4.0}=\mathbf{3.00}$
+\vspace{2pt}
+$n_0=\dfrac{36.1}{20(0.8)}=\mathbf{2.26}$
+\end{block}
+\end{column}
+\begin{column}{0.49\textwidth}
+\begin{block}{Fatigue}
+$\sigma_a=\SI{34.5}{MPa}$, \ $\sigma_i=\SI{622}{MPa}$
+\vspace{2pt}
+$n_f=\dfrac{162(1040-622)}{34.5(1202)}=\mathbf{1.63}$
+\vspace{2pt}
+\alert{Fatigue governs.}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Now the cliff, with numbers}
+Suppose the joint separates --- preload lost, or $P$ exceeded $P_0=\SI{45.1}{kN}$. The bolt now
+carries \emph{all} of $P$:
+\[
+\sigma_a=\frac{20\,000}{2(58)}=\SI{172}{MPa}
+\qquad\text{exactly } 1/C = 5\times \text{ the closed-joint value}
+\]
+\vfill
+With $\sigma_m=\sigma_a$, Goodman gives
+\[
+n=\left(\frac{172}{162}+\frac{172}{1040}\right)^{-1}=\alert{\mathbf{0.81}}
+\]
+\vfill
+\begin{alertblock}{}
+\centering\large
+The joint with a comfortable fatigue margin of \textbf{1.63} fails in fatigue\\ the moment it opens.
+\vspace{2pt}
+\normalsize That is what the preload buys --- and it is the only thing it buys.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Choosing the preload}
+Run Example 6.1 again at three preloads:
+\vfill
+\centering\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Preload & $n_p$ (yield) & $n_0$ (separation) & $n_f$ (fatigue)\\
+\midrule
+$0.90F_p$ & 1.20 & 2.71 & 1.14\\
+$\mathbf{0.75F_p}$ & \textbf{3.00} & \textbf{2.26} & \textbf{1.63}\\
+$0.50F_p$ & 6.01 & 1.50 & 2.44\\
+\bottomrule
+\end{tabular}
+\vfill
+\raggedright
+Two of three margins \emph{improve} as preload falls. Taken at face value that argues for a low
+preload --- and it is wrong, because $n_0$ guards the cliff, \alert{and the preload you set is not
+the preload you get}: $\pm\SI{25}{\percent}$ with a torque wrench.
+\vfill
+\centering
+A nominal $0.5F_p$ can arrive at $0.37F_p$, and $n_0$ falls to 1.1.
+\end{frame}
+
+\begin{frame}{Hence the rule --- and now you know why}
+\begin{center}
+\Large
+$F_i = 0.75\,F_p$ \ (reused joints) \qquad $F_i = 0.90\,F_p$ \ (permanent joints)
+\end{center}
+\vfill
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{High enough}
+that the \textbf{worst} end of the scatter still cannot open the joint.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Low enough}
+that the \textbf{best} end of the scatter still cannot yield the bolt.
+\end{block}
+\end{column}
+\end{columns}
+\vfill
+\centering
+It is a scatter-management rule, not a strength rule.
+\end{frame}
+
+\section{Shear joints}
+
+\begin{frame}{Turn the load through ninety degrees}
+\centering
+\resizebox{0.98\textwidth}{!}{\input{jf_modes_s.tex}}
+\vfill
+\raggedright
+\textbf{All four must be checked, and the smallest margin is the joint.} Modes 1 and 2 are per
+fastener; modes 3 and 4 belong to the \emph{plate}.
+\end{frame}
+
+\begin{frame}{The four allowables}
+\centering\footnotesize
+\begin{tabular}{@{}lll@{}}
+\toprule
+Mode & Allowable & What sets it\\
+\midrule
+Bolt shear & $P_s=\dfrac{\pi D^2}{4}F_{su}$ & double for double shear.
+  \alert{Thread in the plane $\Rightarrow$ use $A_t$}\\[6pt]
+Bearing & $P_{br}=D\,t\,F_{bru}$ & $t$ is the \emph{thinnest} sheet in the stack\\[4pt]
+Net tension & $P_t=(w-D)\,t\,F_{tu}$ & per row, across the full width\\[4pt]
+Shear-out & $P_{so}=2\left(e-\tfrac{D}{2}\right)t\,F_{su}$ & the plug tears to the free edge\\
+\bottomrule
+\end{tabular}
+\vfill
+\raggedright
+\[
+\mathrm{MS}=\frac{P_{\text{allow}}}{P_{\text{applied}}\times 1.15}-1 \ \ge\ 0
+\]
+\end{frame}
+
+\begin{frame}{Why you rarely see a separate shear-out check}
+\begin{alertblock}{It has been absorbed into the bearing allowable}
+$F_{bru}$ is tabulated \textbf{at} an $e/D$ ratio --- typically $e/D=2.0$ and $e/D=1.5$ --- and the
+lower value is lower \emph{precisely because shear-out is eating into it}.
+\end{alertblock}
+\vfill
+Use the $e/D=2.0$ column and you have promised the drawing will carry $e \ge 2D$.
+\vfill
+\begin{alertblock}{The trap}
+If the detailer later moves the hole closer to the edge, your allowable is no longer the one you
+used --- and \textbf{nothing in the stress note will say so}.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Layout: what the rules are protecting}
+\centering\footnotesize
+\begin{tabular}{@{}llp{6.9cm}@{}}
+\toprule
+Dimension & Typical & What it guards against\\
+\midrule
+Edge distance $e$ & $2D$ min, $2.5D$ preferred & \textbf{shear-out}, and the bearing allowable that
+  comes with a short edge\\[3pt]
+ & $4D$ max & an unsupported edge that flutters or buckles\\[3pt]
+Pitch $p$ & $3D$ min, $4$--$6D$ typical & \textbf{net tension}: the sheet splits between holes\\[3pt]
+ & $6$--$8D$ max & sheets separating and ``breathing''\\[3pt]
+Row spacing & $2.5D$ min & overlapping stress fields around adjacent holes\\
+\bottomrule
+\end{tabular}
+\vfill
+\raggedright
+General practice --- the SRM or the drawing governs. What does not change is the logic:
+\alert{edge distance is about shear-out, pitch is about net tension}, and both exist so the joint
+fails where the strength is predictable.
+\end{frame}
+
+\begin{frame}{Example 6.2 --- a six-fastener splice}
+\SI{2.0}{mm} 2024-T3 ($F_{tu}=434$, $F_{bru}=\SI{862}{MPa}$ at $e/D=2$), six steel fasteners
+$D=\SI{4.8}{mm}$ ($F_{su}=\SI{620}{MPa}$), two rows of three at pitch $4D$. $P=\SI{24}{kN}$,
+fitting factor 1.15.
+\vfill
+\centering\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Mode & Allowable & Applied & MS\\
+\midrule
+Bolt shear & \SI{11.22}{kN} & \SI{4.00}{kN} & $+1.44$\\
+Bearing & \SI{8.28}{kN} & \SI{4.00}{kN} & $+0.80$\\
+Net tension (row) & \SI{37.5}{kN} & \SI{24.0}{kN} & $\mathbf{+0.36}$\\
+\bottomrule
+\end{tabular}
+\vfill
+\raggedright
+\textbf{The sheet governs, not the fasteners} --- the normal answer for thin-sheet aerospace
+structure.
+\end{frame}
+
+\begin{frame}{Joint efficiency --- the real cost of joining}
+\begin{columns}[T]
+\begin{column}{0.46\textwidth}
+\begin{block}{Unpierced sheet}
+$w\,t\,F_{tu} = \SI{50.0}{kN}$
+\end{block}
+\begin{block}{The joint}
+\SI{37.5}{kN}
+\end{block}
+\end{column}
+\begin{column}{0.50\textwidth}
+\begin{alertblock}{Efficiency}
+\centering\Large $\dfrac{37.5}{50.0}=\mathbf{75\,\%}$
+\end{alertblock}
+\vspace{2pt}
+{\footnotesize A quarter of the structure's strength was spent on the privilege of joining it.}
+\end{column}
+\end{columns}
+\vfill
+\centering
+\large That is why aircraft structure is designed to \alert{minimise the number of joints}.
+\end{frame}
+
+\section{Fasteners in a row}
+
+\begin{frame}{Every calculation so far divided the load equally}
+\centering
+\resizebox{!}{4.6cm}{\input{jf_row_s.tex}}
+\vfill
+\raggedright
+\alert{That is wrong}, and knowing how wrong is the difference between a static check and a fatigue
+check.
+\end{frame}
+
+\begin{frame}{Why the ends carry more}
+At the \textbf{first} fastener, plate A still carries the whole load and plate B carries none. The
+two plates strain very differently, so the slip across the joint --- and the fastener load --- is
+greatest there.
+\vspace{2pt}
+By the middle, both plates carry similar loads, strain similarly, and the fasteners between them are
+barely working.
+\vfill
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{1. Rows of many fasteners are inefficient}
+At five, the middle one takes \SI{7}{\percent}. At seven, \SI{2}{\percent}.
+\vspace{2pt}
+Beyond about four in a line, extra fasteners add holes, weight and cost --- and almost no strength.
+\end{alertblock}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{2. The end fastener cracks first}
+It is critical \textbf{twice}: highest bearing load \emph{and} highest bypass stress.
+\vspace{2pt}
+Which is exactly what the full-scale lap-splice testing in Lecture 5 found.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Load transfer and bypass --- two stresses at one hole}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{Bearing}
+from the load that fastener \textbf{transfers}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Bypass}
+tension from the load that simply \textbf{passes by}, on its way to the next fastener
+\end{block}
+\end{column}
+\end{columns}
+\vfill
+The end fastener has the highest transfer \emph{and} still has substantial bypass. It is the worst
+combination in the joint.
+\vfill
+\begin{alertblock}{}
+\centering
+A static check that divides the load equally \textbf{will not find this}. Detailed joint analysis in
+industry uses a load-transfer model, not a division.
+\end{alertblock}
+\end{frame}
+
+
+\section{Rivets}
+
+\begin{frame}{Why an aeroplane is still held together with rivets}
+A rivet is a \textbf{shear joint}, so everything from the last two sections applies unchanged ---
+four failure modes, edge distance, pitch, and the end fastener carrying the most.
+\vfill
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{What it gives you}
+\begin{itemize}\footnotesize
+\item \textbf{No preload to lose.} The entire first half of this lecture --- separation, relaxation,
+  torque scatter --- simply does not apply.
+\item Light, cheap, and installed in seconds, by the million.
+\item The finished joint is \textbf{visible and measurable} from outside.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{What it costs you}
+\begin{itemize}\footnotesize
+\item \textbf{Permanent.} Removal means drilling it out, and that damages the hole.
+\item No clamp force you can rely on --- so no friction, and the joint works in bearing.
+\item One chance. A badly driven rivet is a repair, not an adjustment.
+\end{itemize}
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Three families, all still in service}
+\centering
+\resizebox{0.99\textwidth}{!}{\input{jf_rivets_s.tex}}
+\vfill
+\raggedright
+\footnotesize
+\textbf{Solid} where you can reach both sides. \textbf{Blind} where you cannot. \textbf{Pin-and-collar}
+where you want bolt strength with rivet installation speed --- which on a modern airframe is most of
+the primary structure.
+\end{frame}
+
+\begin{frame}{The solid rivet, and how to read one}
+\centering\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+Alloy & Code & Head marking & Part number\\
+\midrule
+1100-F & A & plain & MS20470A \ / \ MS20426A\\
+\textbf{2117-T4} & \textbf{AD} & \textbf{dimple} & MS20470AD \ / \ MS20426AD\\
+5056-H32 & B & raised cross & MS20470B \ / \ MS20426B\\
+2017-T4 & D & raised dot & MS20470D \ / \ MS20426D\\
+2024-T4 & DD & raised double dash & MS20470DD \ / \ MS20426DD\\
+7050-T73 & E & indented ring & MS20470E \ / \ MS20426E\\
+Ti 45Cb & T & indented diamond & MS20470T \ / \ MS20426T\\
+\bottomrule
+\end{tabular}
+\vfill
+\raggedright
+\textbf{MS20470} is the universal head; \textbf{MS20426} is the $100^\circ$ countersunk head ---
+the same $100^\circ$ as Lecture 5, and the same knife-edge rule applies.
+\vfill
+\centering
+\alert{The alloy is stamped on the head.} You can identify a rivet in an airframe without paperwork.
+\end{frame}
+
+\begin{frame}{Ice-box rivets --- the alloy that fights back}
+The strong aluminium rivet alloys are \textbf{heat treatable}, which means they \alert{age-harden at
+room temperature} --- within minutes of coming out of the freezer.
+\vfill
+\centering\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Alloy & Stored & Working time at room temperature\\
+\midrule
+2017-T (D) & below \SI{32}{\degree F}, up to 2 weeks & about \textbf{1 hour}\\
+2024-T (DD) & below \SI{32}{\degree F}, up to 2 weeks & about \textbf{10 minutes}\\
+\bottomrule
+\end{tabular}
+\vfill
+\raggedright
+Past that, the rivet is too hard to drive without cracking, and it must go back for
+re-heat-treatment.
+\vfill
+\begin{alertblock}{Which is exactly why 2117-T4 (AD) dominates}
+It is driven \textbf{as received} --- no refrigeration, no clock, no re-heat-treatment. A slightly
+weaker rivet that can always be installed correctly beats a stronger one that often is not.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Driving: the shop head \emph{is} the inspection}
+\begin{columns}[T]
+\begin{column}{0.46\textwidth}
+\begin{block}{The three numbers}
+\begin{itemize}\footnotesize
+\item Protrude \textbf{1.5\,$D$} through the joint before driving.
+\item Finished shop head: \textbf{1.5\,$D$} across, at least \textbf{0.5\,$D$} high.
+\item Keep $D \le 5.5\,t$ of the \emph{thinnest} sheet, or the material distorts.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.50\textwidth}
+\begin{alertblock}{Why this matters more than it looks}
+A bolt's preload is invisible once installed --- $\pm\SI{25}{\percent}$ and no way to check.
+\vspace{3pt}
+A rivet's quality is a \textbf{dimension}. Too short and the head is undersized; too long and the
+shank bends over instead of swelling.
+\vspace{3pt}
+\alert{You can put a gauge on it.}
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Blind fasteners --- when you can only reach one side}
+\textbf{CherryMAX} and similar: a sleeve, a stem, and a \textbf{mechanical} locking collar. The stem
+pulls, bulbs the blind head, then snaps off flush.
+\vfill
+\begin{columns}[T]
+\begin{column}{0.46\textwidth}
+\begin{block}{Why mechanical lock}
+A friction-locked stem can shake out under vibration. The visible locking collar is what makes it
+structural --- and inspectable.
+\end{block}
+\end{column}
+\begin{column}{0.50\textwidth}
+\begin{alertblock}{Where they may not go}
+Fluid-tight areas \ $\cdot$ \ engine air intakes \ $\cdot$ \ control surfaces \ $\cdot$ \ hinges \
+$\cdot$ \ landing gear fittings.
+\vspace{2pt}
+{\footnotesize And on a metal airframe repair, only where the manufacturer or the authority has
+specifically approved them.}
+\end{alertblock}
+\end{column}
+\end{columns}
+\vfill
+\centering
+The honest rule: \alert{blind rivets are not used where a driven rivet can be installed.}
+\end{frame}
+
+\begin{frame}{Hi-Lok and lockbolts --- the answer to Lecture 5's problem}
+A two-piece pin and collar. The pin is held by a \textbf{hex socket in its own end}; the collar is
+torqued until its wrenching portion \alert{shears off at a built-in fracture groove}.
+\vfill
+\begin{alertblock}{That shear-off happens at a predetermined preload}
+So the fastener \textbf{cannot be overtorqued}, and \textbf{no torque check is needed}.
+\vspace{3pt}
+Recall \S11.3 of Lecture 5: a torque wrench delivers the intended preload to $\pm\SI{25}{\percent}$.
+Hi-Lok does not measure the preload better --- \textbf{it removes the measurement from the problem}.
+\end{alertblock}
+\vfill
+\footnotesize
+Interference fit in aluminium (not exceeding \SI{0.002}{in}); \textbf{clearance} fit in steel,
+titanium and composites. \ Hi-Tigue adds a bead that cold-works the hole; Hi-Lite is the lighter
+titanium version, with lower clamp-up --- and its collars are \emph{not} interchangeable.
+\end{frame}
+
+\begin{frame}{Where rivets stop}
+\begin{alertblock}{Composites}
+\textbf{Solid rivets must not be used in composite structure.} Driving one expands the shank into an
+interference fit, which overstresses the hole and \textbf{delaminates the laminate}.
+\vspace{3pt}
+What is good practice in aluminium --- an interference fit to improve fatigue life --- is damage in a
+laminate. Composites get clearance-fit pin-and-collar fasteners in titanium or A286.
+\end{alertblock}
+\vfill
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{And increasingly}
+bonding, co-cured structure, and friction stir welding remove the hole altogether --- and with it the
+stress concentration, the sealing problem and the leak path.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{But}
+a bonded joint cannot be inspected the way a rivet line can, and it cannot be taken apart. The rivet
+survives because it is \textbf{visible}.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Eccentric bolt groups}
+
+\begin{frame}{When the load misses the centroid}
+\centering
+\resizebox{!}{5.8cm}{\input{jf_group_s.tex}}
+\end{frame}
+
+\begin{frame}{The method, in four steps}
+\begin{enumerate}
+\item \textbf{Find the centroid.} For identical fasteners, the average of their coordinates.
+\item \textbf{Direct shear}, identical on every fastener: \quad $F_d = P/n$
+\item \textbf{Moment shear}, perpendicular to the radius and proportional to it:
+  \[ M = P\,e, \qquad F_i = \frac{M\,r_i}{\sum_j r_j^{2}} \]
+\item \textbf{Add as vectors} and take the largest resultant.
+\end{enumerate}
+\vfill
+\begin{alertblock}{}
+\centering
+The critical fastener is \alert{not} always the one furthest from the centroid --- it is the one
+where the two components \textbf{align best}.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Example 6.3 --- a bracket with six bolts}
+Six bolts at $(\pm40,0)$ and $(\pm40,\pm60)$ mm. $P=\SI{18}{kN}$ acting \SI{250}{mm} from the
+centroid. \ $\sum r^2 = \SI{24000}{mm^2}$, \ $M=\SI{4500}{kN.mm}$.
+\vfill
+\centering\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Bolt (mm) & $r$ (mm) & $F_M$ (kN) & $R$ (kN)\\
+\midrule
+$(-40,-60)$ & 72.1 & 13.5 & $\mathbf{15.4}$\\
+$(-40,+60)$ & 72.1 & 13.5 & $\mathbf{15.4}$\\
+$(+40,\pm60)$ & 72.1 & 13.5 & 12.1\\
+$(-40,0)$ & 40.0 & 7.5 & 10.5\\
+$(+40,0)$ & 40.0 & 7.5 & 4.5\\
+\bottomrule
+\end{tabular}
+\vfill
+\raggedright
+Moment term \SI{13.5}{kN} against \SI{3}{kN} of direct shear --- a ratio of \textbf{four and a
+half}.
+\end{frame}
+
+\begin{frame}{What that ratio tells you to do}
+\begin{center}\Large
+In an eccentric joint, the \alert{moment almost always dominates}.
+\end{center}
+\vfill
+\begin{alertblock}{So the most effective design change is not a bigger bolt}
+It is \textbf{spreading the pattern} --- because $\sum r^2$ grows with the \emph{square} of the
+spacing.
+\vspace{3pt}
+Double the spacing and the moment force on each bolt roughly halves.
+\end{alertblock}
+\vfill
+\centering
+Two bolts were equally critical here. In a real bracket, manufacturing scatter decides which one
+goes first --- so you check both.
+\end{frame}
+
+\section{Combined loading, and the grip}
+
+\begin{frame}{Combined tension and shear}
+\[
+R_s=\frac{\text{applied shear}}{\text{shear allowable}},
+\qquad
+R_t=\frac{\text{applied tension}}{\text{tension allowable}}
+\]
+\vfill
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{Shear plane in the \emph{shank}}
+\[ R_s^{3}+R_t^{2}=1 \]
+{\footnotesize shear allowable on the body, tension allowable on the threads. Used since the
+AN-series bolts.}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Shear plane in the \emph{thread}}
+\[ R_s^{2}+R_t^{2}=1 \]
+{\footnotesize the commonly assumed form.}
+\end{block}
+\end{column}
+\end{columns}
+\vfill
+\begin{alertblock}{Read those together}
+At $R_s=0.5$ the cubic leaves $R_t=0.93$; the square leaves $R_t=0.87$. \textbf{The grip length
+decides which equation you are entitled to use.}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{A caution worth carrying}
+\begin{alertblock}{The interaction equation is an empirical curve fit}
+NASA testing has found $R_s^3+R_t^2=1$ can \textbf{overpredict} measured combined strength by up to
+\SI{7}{\percent} when \emph{actual} strengths are used as allowables.
+\vspace{3pt}
+It is conservative when \textbf{minimum specified} strengths are used --- which is how you will
+always use it.
+\end{alertblock}
+\vfill
+The same work notes that using this form with both allowables taken from the \emph{same}
+cross-section is not recommended.
+\vfill
+\centering
+\alert{Know what your allowables are before you trust the exponent.}
+\end{frame}
+
+\begin{frame}{What the grip length decides}
+\begin{enumerate}
+\item \textbf{Which area resists the shear.} Shank $\pi D^2/4$, or thread $A_t$. For an M10 that is
+  \SI{78.5}{mm^2} against \SI{58.0}{mm^2} --- a \SI{26}{\percent} loss before any other effect.
+\item \textbf{Whether the bearing surface is a notch.} The thread root sits exactly where the
+  bearing pressure peaks --- and it damages the hole.
+\item \textbf{Which interaction equation you may use.} $R_s^3$ or $R_s^2$.
+\item \textbf{Whether the head seats at all.} Too long, and it bottoms on the run-out instead of the
+  member --- so no preload is ever developed.
+\end{enumerate}
+\vfill
+\begin{alertblock}{}
+\centering
+The grip is a \textbf{dimension on the drawing}, derived from the stack and checked against the
+shear plane. It is not something the shop floor picks out of a bin.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Three more things that belong to joints, not fasteners}
+\begin{alertblock}{Never mix fastener types in one load path}
+Bolts and rivets in the same joint do not share: the \textbf{stiffer one takes the load until it
+fails}. Same for a close-tolerance fastener beside a clearance one.
+\end{alertblock}
+\begin{alertblock}{A shim is a load path}
+A shimmed joint transmits load through the shim. Liquid or tapered shims change the fastener bending
+and the effective grip. \textbf{Shims are specified, not improvised.}
+\end{alertblock}
+\begin{alertblock}{Single-lap joints bend}
+The load path is offset by the sheet thickness, so the splice carries a \textbf{secondary bending
+moment}. It is why a single-lap joint has a shorter fatigue life than its static margin suggests ---
+and why doublers are symmetric wherever weight allows.
+\end{alertblock}
+\end{frame}
+
+\section{What to take away}
+
+\begin{frame}{What to take away}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\begin{block}{Tension joints}
+\begin{itemize}\footnotesize
+\item The preload \textbf{is} the design.
+\item Check yield, separation, fatigue. Fatigue usually governs.
+\item \alert{Reduce $C$ to improve fatigue, not $F_i$.}
+\item Separation is a cliff, not a limit.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Shear joints}
+\begin{itemize}\footnotesize
+\item Check all four modes.
+\item Thin sheet: the plate governs.
+\item Edge distance guards shear-out; pitch guards net tension.
+\item \alert{Add rows, not fasteners in a line.}
+\item Design the \textbf{end} fastener for fatigue.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\vfill
+\centering
+\large And specify the grip --- it decides the area, the notch, the equation, and whether the head
+seats at all.
+\end{frame}
+
+\end{document}

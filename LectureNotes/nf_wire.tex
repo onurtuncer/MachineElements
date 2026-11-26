@@ -1,0 +1,59 @@
+% Safety wire: the direction rule. Bolt heads in plan, right-hand threads.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  hd/.style={fill=blue!8,draw=blue!55!black,thick},
+  hole/.style={fill=white,draw=blue!55!black,thin},
+  wire/.style={draw=black!65,line width=0.9pt},
+  tens/.style={->,red!70!black,line width=1.0pt},
+  spin/.style={->,green!45!black,line width=0.9pt},
+  ok/.style={font=\small\bfseries,text=green!45!black},
+  no/.style={font=\small\bfseries,text=red!70!black},
+  cp/.style={font=\scriptsize,align=center,text width=6.4cm,anchor=north}
+}
+% hex head in plan at (#1,#2)
+\newcommand{\head}[2]{%
+  \fill[hd] (#1,#2) +(0:0.70) \foreach \a in {60,120,...,300}{ -- +(\a:0.70)} -- cycle;
+  \draw[blue!55!black,thick] (#1,#2) +(0:0.70) \foreach \a in {60,120,...,300}{ -- +(\a:0.70)} -- cycle;
+  \draw[spin] ([shift=(305:0.95)]#1,#2) arc (305:235:0.95);
+  \node[font=\tiny,text=green!45!black,anchor=north] at (#1,#2-1.08) {tighten};}
+% twisted wire from (#1,#2) to (#3,#4)
+\newcommand{\twist}[4]{%
+  \pgfmathsetmacro\dxx{#3-#1}\pgfmathsetmacro\dyy{#4-#2}
+  \pgfmathsetmacro\len{sqrt(\dxx*\dxx+\dyy*\dyy)}
+  \pgfmathsetmacro\rot{atan2(\dyy,\dxx)}
+  \begin{scope}[shift={(#1,#2)},rotate=\rot]
+    \draw[wire,domain=0:\len,samples=160,variable=\t] plot ({\t},{ 0.075*sin(760*\t)});
+    \draw[wire,domain=0:\len,samples=160,variable=\t] plot ({\t},{-0.075*sin(760*\t)});
+  \end{scope}}
+
+%=================== (a) correct ===================
+\begin{scope}
+\head{0}{0}\head{3.0}{0}
+\fill[hole] (0.45,0.42) circle (0.09);
+\fill[hole] (2.55,-0.42) circle (0.09);
+\twist{0.45}{0.42}{2.55}{-0.42}
+% tension at each hole, in the tightening sense
+\draw[tens] (0.45,0.42) -- ++(-21.8:0.78);
+\draw[tens] (2.55,-0.42) -- ++(158.2:0.78);
+\node[ok,anchor=south] at (1.5,1.42) {Correct};
+\node[cp] at (1.5,-1.62) {The wire enters one head \emph{above} the axis and the other
+\emph{below} it. Pulled taut, it turns \textbf{both} heads clockwise --- which for a right-hand
+thread is the tightening direction.};
+\end{scope}
+
+%=================== (b) wrong ===================
+\begin{scope}[xshift=7.6cm]
+\head{0}{0}\head{3.0}{0}
+\fill[hole] (0.45,0.42) circle (0.09);
+\fill[hole] (2.55,0.42) circle (0.09);
+\twist{0.45}{0.42}{2.55}{0.42}
+\draw[tens] (0.45,0.42) -- ++(0:0.78);
+\draw[tens] (2.55,0.42) -- ++(180:0.78);
+\draw[red!70!black,very thick] (3.0,0.06) circle (0.80);
+\node[no,anchor=south] at (1.5,1.42) {Wrong};
+\node[cp] at (1.5,-1.62) {Both holes above the axis. The wire tightens the left-hand bolt and
+\textbf{unscrews the right-hand one}. The installation looks tidy, passes a glance, and is
+doing half its job backwards.};
+\end{scope}
+
+\end{tikzpicture}

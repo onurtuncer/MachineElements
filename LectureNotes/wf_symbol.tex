@@ -1,0 +1,25 @@
+% Anatomy of a weld symbol (ISO 2553), with the joint it describes.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{lab/.style={font=\footnotesize}, sm/.style={font=\scriptsize,text=black!70}, pl/.style={fill=black!10,draw=black,line width=0.6pt}}
+% ---- the joint ----
+\path[pl] (-6.2,-0.4) rectangle (-2.6,0); \path[pl] (-4.6,0) rectangle (-4.2,1.9);
+\fill[black!70] (-4.2,0) -- (-3.72,0) -- (-4.2,0.48) -- cycle;
+\node[sm,anchor=north] at (-4.4,-0.5) {the joint};
+% ---- the symbol ----
+\draw[line width=0.8pt,->] (0.2,1.5) -- (-1.0,1.5) -- (-3.95,0.26);
+\draw[line width=0.8pt] (0.2,1.5) -- (6.6,1.5) -- (7.2,2.0) (6.6,1.5) -- (7.2,1.0);
+\draw[line width=0.5pt,dashed] (0.2,1.28) -- (6.6,1.28);
+\draw[line width=0.8pt] (2.3,1.5) -- (2.3,2.15) -- (2.95,1.5);            % fillet symbol on the arrow side
+\node[font=\small] at (1.55,1.86) {a5}; \node[font=\small] at (4.3,1.86) {6 $\times$ 40 (60)}; \node[font=\small] at (7.75,1.5) {141};
+\draw[line width=0.8pt] (0.2,1.5) circle[radius=0.17];                    % weld all round
+\draw[line width=0.8pt] (0.2,1.67) -- (0.2,2.55); \fill (0.2,2.55) -- (0.75,2.38) -- (0.2,2.21) -- cycle; % site weld
+% ---- callouts ----
+\draw[<-,line width=0.3pt] (-2.4,0.95) -- (-2.6,2.2); \node[sm,anchor=south] at (-2.6,2.2) {arrow: points at the joint};
+\draw[<-,line width=0.3pt] (1.55,2.08) -- (1.55,3.0); \node[sm,anchor=south,align=center] at (1.55,3.0) {size: throat $a=\SI{5}{mm}$\\ ($z5$ would be a \SI{5}{mm} leg)};
+\draw[<-,line width=0.3pt] (2.55,2.0) -- (3.2,3.9); \node[sm,anchor=south,align=center] at (3.6,3.9) {weld type: fillet};
+\draw[<-,line width=0.3pt] (4.3,2.08) -- (5.2,3.0); \node[sm,anchor=south,align=center] at (5.6,3.0) {6 lengths of \SI{40}{mm},\\ gaps of \SI{60}{mm}};
+\draw[<-,line width=0.3pt] (7.75,1.72) -- (7.9,2.7); \node[sm,anchor=south,align=center] at (7.9,2.7) {tail: process\\ (141 = TIG)};
+\draw[<-,line width=0.3pt] (0.2,1.3) -- (-0.3,0.45); \node[sm,anchor=north,align=center] at (-0.5,0.45) {circle: weld\\ all round};
+\draw[<-,line width=0.3pt] (0.5,2.38) -- (-0.4,3.0); \node[sm,anchor=south east,align=right] at (-0.3,2.95) {flag: made on site};
+\draw[<-,line width=0.3pt] (4.6,1.26) -- (4.8,0.45); \node[sm,anchor=north,align=center] at (4.9,0.45) {symbol on the solid line: weld on the \emph{arrow} side\\ on the dashed line: the \emph{other} side};
+\end{tikzpicture}

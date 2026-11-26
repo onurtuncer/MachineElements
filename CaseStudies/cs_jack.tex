@@ -1,0 +1,69 @@
+% The MD-80 horizontal stabiliser trim jackscrew, and where the load path runs.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  steel/.style={fill=blue!8,draw=blue!55!black,thick},
+  brz/.style={fill=orange!30,draw=orange!70!black,thick},
+  str/.style={fill=black!12,draw=black!55,thick},
+  air/.style={->,red!70!black,line width=1.3pt},
+  path/.style={red!70!black,line width=2.2pt},
+  nt/.style={font=\scriptsize,align=left,text width=4.3cm},
+  sm/.style={font=\tiny,text=black!60}
+}
+
+% ---------- the screw ----------
+\draw[steel] (-0.33,0.55) rectangle (0.33,7.10);
+\foreach \k in {0,1,...,44}{
+  \pgfmathsetmacro\yy{0.70+0.14*\k}
+  \ifdim\yy pt<7.05pt \draw[blue!55!black,thin] (-0.33,\yy) -- (0.33,\yy-0.07);\fi}
+\draw[black!55,thin] (-1.95,2.95) -- (-0.36,2.75);
+\node[sm,anchor=east,align=right] at (-1.98,2.95) {acme screw ---\\ case-hardened steel};
+
+% ---------- the acme nut (gimbal nut) ----------
+\fill[brz] (-0.92,4.30) rectangle (0.92,5.30);
+\draw[orange!70!black,thick] (-0.92,4.30) rectangle (0.92,5.30);
+\draw[path] (-0.33,4.30) -- (-0.33,5.30);
+\draw[path] (0.33,4.30) -- (0.33,5.30);
+\draw[black!55,thin] (1.90,4.05) -- (0.96,4.55);
+\node[sm,anchor=west,align=left] at (1.93,4.00) {acme nut ---\\ aluminium bronze};
+
+% gimbal pins out to the stabiliser
+\fill[black!45] (-1.12,4.65) rectangle (-0.92,4.95);
+\fill[black!45] (0.92,4.65) rectangle (1.12,4.95);
+
+% ---------- the stabiliser ----------
+\fill[str] (-3.30,5.05) -- (2.60,5.60) -- (2.60,5.95) -- (-3.30,5.50) -- cycle;
+\draw[black!55,thick] (-3.30,5.05) -- (2.60,5.60) -- (2.60,5.95) -- (-3.30,5.50) -- cycle;
+\node[sm,anchor=south west] at (0.70,5.84) {horizontal stabiliser};
+\draw[black!55,thick] (-1.02,4.80) -- (-1.60,5.22);
+\draw[black!55,thick] (1.02,4.80) -- (1.55,5.30);
+\fill[black!55] (2.35,5.62) circle (0.09);
+\node[sm,anchor=north west] at (2.42,5.52) {pivot};
+
+% air load
+\draw[air] (-2.95,6.85) -- (-2.95,5.48);
+\node[font=\scriptsize,text=red!70!black,anchor=south] at (-2.95,6.90) {air load};
+
+% ---------- stops ----------
+\draw[black!55,very thick] (-0.60,7.10) -- (0.60,7.10);
+\node[sm,anchor=west] at (0.66,7.14) {upper mechanical stop};
+\draw[black!55,very thick] (-0.60,0.55) -- (0.60,0.55);
+
+% ---------- gearbox and motors ----------
+\fill[str] (-1.15,-0.70) rectangle (1.15,0.55);
+\draw[black!55,thick] (-1.15,-0.70) rectangle (1.15,0.55);
+\node[sm] at (0,-0.08) {gearbox};
+\fill[black!22,draw=black!55] (-2.25,-0.50) rectangle (-1.15,0.30);
+\fill[black!22,draw=black!55] (1.15,-0.50) rectangle (2.25,0.30);
+\node[sm,align=center] at (-1.70,-0.10) {primary\\ motor};
+\node[sm,align=center] at (1.70,-0.10) {alternate\\ motor};
+\draw[black!60,thick] (-1.15,-1.05) -- (1.15,-1.05);
+\foreach \k in {-1.0,-0.7,...,1.1}{\draw[black!50,thin] (\k,-1.05) -- (\k-0.16,-1.25);}
+\node[sm,anchor=north] at (0,-1.32) {airframe};
+
+% ---------- the load path annotation ----------
+\draw[path,->] (1.95,3.05) -- (0.46,4.52);
+\node[nt,anchor=north west,text=red!70!black] at (1.70,3.05)
+ {\textbf{The whole of the load path.}\\ Everything the stabiliser does to the airframe passes
+  through these threads --- and through nothing else.};
+
+\end{tikzpicture}

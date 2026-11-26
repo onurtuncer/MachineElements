@@ -1,0 +1,49 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize,line join=round]
+\tikzset{frc/.style={->,very thick}}
+% ---------------- (a) unwrap ----------------
+\begin{scope}
+\fill[gray!12] (0,0) -- (6.0,0) -- (6.0,1.05) -- cycle;
+\draw[thick] (0,0) -- (6.0,0) -- (6.0,1.05) -- cycle;
+\draw[<->] (0,-0.34) -- (6.0,-0.34) node[midway,below] {one turn $=\pi d_m$};
+\draw[<->] (6.3,0) -- (6.3,1.05) node[midway,right] {lead $L$};
+\draw (1.25,0) arc (0:9.9:1.25);
+\node[anchor=west] at (1.3,0.13) {$\lambda$};
+\node[anchor=south west] at (0.15,0.78) {$\tan\lambda=\dfrac{L}{\pi d_m}$};
+\node[anchor=north,font=\bfseries] at (3.0,-0.80) {(a) unwrap one turn of the mean helix};
+\end{scope}
+% ---------------- (b) raising ----------------
+\begin{scope}[yshift=-4.3cm]
+\fill[gray!12] (0,0) -- (3.0,0) -- (3.0,1.40) -- cycle;
+\draw[thick] (0,0) -- (3.0,0) -- (3.0,1.40) -- cycle;
+\draw[thick,fill=gray!35,rotate around={25:(1.45,0.68)}] (1.18,0.68) rectangle (1.72,1.04);
+\draw[frc,blue!60!black] (1.45,1.95) -- (1.45,1.12);
+\node[blue!60!black,anchor=south] at (1.45,1.96) {$F$ (axial load)};
+\draw[frc,red!70!black] (0.30,0.86) -- (1.08,0.86);
+\node[red!70!black,anchor=east] at (0.28,0.86) {$P$};
+\draw[frc,green!40!black] (1.45,0.86) -- ++(115:0.95);
+\node[green!35!black,anchor=south east,font=\tiny] at (1.07,1.72) {$N$};
+\draw[frc,green!40!black] (1.45,0.86) -- ++(205:0.92);
+\node[green!35!black,anchor=north east,font=\tiny] at (0.62,0.50) {$fN$};
+\node[anchor=north,font=\bfseries] at (1.5,-0.22) {(b) raising};
+\node[anchor=north,align=center,text width=3.9cm,font=\tiny] at (1.5,-0.70)
+ {the nut climbs the incline; friction opposes the motion and \emph{adds} to $P$};
+\end{scope}
+% ---------------- (c) lowering ----------------
+\begin{scope}[xshift=6.4cm,yshift=-4.3cm]
+\fill[gray!12] (0,0) -- (3.0,0) -- (3.0,1.40) -- cycle;
+\draw[thick] (0,0) -- (3.0,0) -- (3.0,1.40) -- cycle;
+\draw[thick,fill=gray!35,rotate around={25:(1.45,0.68)}] (1.18,0.68) rectangle (1.72,1.04);
+\draw[frc,blue!60!black] (1.45,1.95) -- (1.45,1.12);
+\node[blue!60!black,anchor=south] at (1.45,1.96) {$F$ (axial load)};
+\draw[frc,red!70!black] (2.60,0.86) -- (1.82,0.86);
+\node[red!70!black,anchor=west] at (2.62,0.86) {$P$};
+\draw[frc,green!40!black] (1.45,0.86) -- ++(115:0.95);
+\node[green!35!black,anchor=south east,font=\tiny] at (1.07,1.72) {$N$};
+\draw[frc,green!40!black] (1.45,0.86) -- ++(25:0.92);
+\node[green!35!black,anchor=north west,font=\tiny] at (2.30,1.30) {$fN$};
+\node[anchor=north,font=\bfseries] at (1.5,-0.22) {(c) lowering};
+\node[anchor=north,align=center,text width=4.1cm,font=\tiny] at (1.5,-0.70)
+ {friction now \emph{resists} the load. If $f>\tan\lambda$ the required $P$ reverses sign: the screw is self-locking};
+\end{scope}
+\end{tikzpicture}

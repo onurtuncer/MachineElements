@@ -1,0 +1,37 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize,line join=round]
+\tikzset{bod/.style={thick,fill=gray!20},prt/.style={thick,fill=gray!42}}
+\def\thr#1#2#3{\foreach \i in {0,...,#3}{\draw[line width=0.4pt] (#1+\i*0.16,#2) -- (#1+\i*0.16+0.08,#2+0.14) -- (#1+\i*0.16+0.16,#2);}}
+% ---------------- WRONG ----------------
+\begin{scope}
+\fill[gray!20] (0,0) rectangle (1.5,0.95); \draw[thick] (0,0) rectangle (1.5,0.95);
+\fill[gray!20] (1.5,0.18) rectangle (4.3,0.77); \draw[thick] (1.5,0.18) -- (4.3,0.18);
+\draw[thick] (1.5,0.77) -- (4.3,0.77); \draw[thick] (4.3,0.18) -- (4.3,0.77);
+\thr{1.55}{0.77}{16}
+\draw[red!75!black,line width=1.2pt] (1.50,0.18) arc (270:360:0.0);
+\draw[red!75!black,line width=1.3pt] (1.52,0.77) -- (1.52+0.34,0.77);
+\draw[prt] (1.52,0.95) rectangle (2.25,1.60);
+\draw[->,red!75!black] (1.05,2.05) -- (1.62,0.98);
+\node[red!75!black,anchor=south,align=center,font=\tiny] at (1.05,2.07)
+  {thread runs out into the fillet:\\ incomplete threads, and the part
+   seats on them};
+\node[anchor=north,font=\bfseries,red!75!black] at (2.2,-0.18) {WRONG};
+\end{scope}
+% ---------------- RIGHT ----------------
+\begin{scope}[xshift=6.3cm]
+\fill[gray!20] (0,0) rectangle (1.5,0.95); \draw[thick] (0,0) rectangle (1.5,0.95);
+\fill[gray!20] (1.5,0.18) rectangle (4.3,0.77);
+\draw[thick] (1.5,0.18) -- (4.3,0.18);
+\draw[thick] (4.3,0.18) -- (4.3,0.77);
+% undercut relief groove
+\fill[white] (1.50,0.62) rectangle (1.86,0.80);
+\draw[thick] (1.50,0.77) -- (1.50,0.68) arc (180:360:0.18) -- (1.86,0.77) -- (4.3,0.77);
+\thr{1.90}{0.77}{14}
+\draw[->,green!40!black] (1.15,2.05) -- (1.66,0.86);
+\node[green!35!black,anchor=south,align=center,font=\tiny] at (1.15,2.07)
+  {undercut relief groove:\\ full-form threads only, and a
+   clean seating face};
+\draw[prt] (1.88,0.95) rectangle (2.61,1.60);
+\node[anchor=north,font=\bfseries,green!35!black] at (2.2,-0.18) {RIGHT};
+\end{scope}
+\end{tikzpicture}

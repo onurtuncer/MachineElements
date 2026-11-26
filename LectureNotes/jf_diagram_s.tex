@@ -1,0 +1,62 @@
+% The joint diagram. Numbers are the M10 joint of Lecture 5: ki=485, km=1936 kN/mm, Fi=36.1 kN, P=20 kN.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  bolt/.style={blue!60!black,line width=1.4pt},
+  memb/.style={orange!75!black,line width=1.4pt},
+  thin2/.style={gray!60,thin},
+  dimn/.style={<->,gray!70!black,thin},
+  lb/.style={font=\scriptsize},
+  key/.style={font=\scriptsize,align=left}
+}
+\def\xs{70}      % mm  -> cm
+\def\ys{0.11}    % kN  -> cm
+\pgfmathsetmacro\db{0.0744*\xs}     % bolt stretch at preload
+\pgfmathsetmacro\dm{0.0186*\xs}     % member squash at preload
+\pgfmathsetmacro\Fi{36.1*\ys}
+\pgfmathsetmacro\dd{0.00826*\xs}    % extra deflection under P
+\pgfmathsetmacro\Fb{40.1*\ys}
+\pgfmathsetmacro\Fm{20.1*\ys}
+\pgfmathsetmacro\base{\db+\dm}
+\pgfmathsetmacro\Fmid{(\Fb+\Fm)/2}
+
+% axes
+\draw[->,black!70] (-0.3,0) -- (\base+2.6,0);
+\node[font=\scriptsize,anchor=north] at (\base+1.9,-0.08) {deflection $\delta$};
+\draw[->,black!70] (0,-0.3) -- (0,\Fi+1.9) node[anchor=north west,font=\scriptsize,rotate=90,xshift=-4pt] {force};
+
+% ---- the two springs at preload ----
+\draw[bolt] (0,0) -- (\db,\Fi);
+\draw[memb] (\base,0) -- (\db,\Fi);
+\node[lb,text=blue!60!black,anchor=south east,rotate=37] at (\db*0.55,\Fi*0.55) {bolt, slope $k_b$};
+\node[lb,text=orange!75!black,anchor=south west,rotate=-72] at (\db+\dm*0.42,\Fi*0.52) {member, slope $k_m$};
+
+% preload level
+\draw[thin2,dashed] (0,\Fi) -- (\db,\Fi);
+\node[lb,anchor=east] at (-0.1,\Fi) {$F_i$};
+\fill[black] (\db,\Fi) circle (1.8pt);
+
+% ---- after the external load P is applied ----
+\draw[bolt,dashed,opacity=0.9] (\db,\Fi) -- (\db+\dd,\Fb);
+\draw[memb,dashed,opacity=0.9] (\db,\Fi) -- (\db+\dd,\Fm);
+\fill[blue!60!black] (\db+\dd,\Fb) circle (1.8pt);
+\fill[orange!75!black] (\db+\dd,\Fm) circle (1.8pt);
+
+% the split of P
+\draw[thin2,dashed] (\db+\dd,\Fb) -- (\base+1.95,\Fb);
+\draw[thin2,dashed] (\db+\dd,\Fm) -- (\base+1.95,\Fm);
+\draw[thin2,dashed] (\db+\dd,\Fi) -- (\base+1.95,\Fi);
+
+\draw[dimn,blue!60!black] (\base+0.30,\Fi) -- (\base+0.30,\Fb);
+\node[lb,text=blue!60!black,anchor=west] at (\base+0.40,\Fb+0.02) {$\Delta F_b = CP$};
+\draw[dimn,orange!75!black] (\base+0.30,\Fm) -- (\base+0.30,\Fi);
+\node[lb,text=orange!75!black,anchor=west] at (\base+0.40,\Fm-0.02) {$\Delta F_m = -(1-C)P$};
+\draw[dimn,black!75] (\base+1.95,\Fm) -- (\base+1.95,\Fb);
+\node[lb,anchor=west] at (\base+2.05,\Fmid) {$P$};
+
+% deflections at preload
+\draw[dimn] (0,-0.45) -- (\db,-0.45);
+\node[lb,anchor=north] at (\db/2,-0.48) {$\delta_b = F_i/k_b$};
+\draw[dimn] (\db,-0.45) -- (\base,-0.45);
+\node[lb,anchor=north] at (\db+\dm/2,-0.48) {$\delta_m$};
+
+\end{tikzpicture}

@@ -1,0 +1,20 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize]
+\begin{axis}[width=11.2cm,height=4.4cm,xlabel={reversal},ylabel={$\sigma$ (MPa)},
+  xmin=0.5,xmax=10.5,ymin=-260,ymax=330,grid=both,grid style={gray!20},
+  xtick={1,2,...,10},
+  label style={font=\scriptsize},tick label style={font=\scriptsize}]
+\addplot[very thick,gray!55,mark=*,mark size=1.3pt] coordinates
+ {(1,0)(2,240)(3,-120)(4,180)(5,-200)(6,280)(7,-80)(8,120)(9,-160)(10,0)};
+% counted cycles highlighted
+\addplot[very thick,red!70!black] coordinates {(1,0)(2,240)(3,-120)};
+\addplot[very thick,orange!85!black] coordinates {(3,-120)(4,180)(5,-200)};
+\addplot[very thick,green!50!black] coordinates {(7,-80)(8,120)(9,-160)};
+\node[font=\tiny,red!70!black,anchor=south] at (axis cs:2,250) {240};
+\node[font=\tiny,orange!85!black,anchor=south] at (axis cs:4,190) {300};
+\node[font=\tiny,green!50!black,anchor=south] at (axis cs:8,130) {200};
+% residue
+\addplot[very thick,blue!60!black,dashed] coordinates {(5,-200)(6,280)(9,-160)(10,0)};
+
+\end{axis}
+\end{tikzpicture}

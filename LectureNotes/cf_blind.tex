@@ -1,0 +1,50 @@
+
+\begin{tikzpicture}[scale=1.05,>=Stealth,font=\scriptsize,line join=round]
+\tikzset{bl/.style={thick,fill=gray!55},pl/.style={thick,fill=gray!38}}
+% ---------------- WRONG ----------------
+\begin{scope}
+\fill[gray!24] (0,0) rectangle (3.2,1.55); \draw[thick] (0,0) rectangle (3.2,1.55);
+\fill[white] (1.25,0.55) rectangle (1.95,1.55);
+\draw[thick] (1.25,1.55) -- (1.25,0.55) -- (1.95,0.55) -- (1.95,1.55);
+\foreach \y in {0.62,0.78,0.94,1.10,1.26,1.42}{
+  \draw[line width=0.4pt] (1.25,\y) -- (1.40,\y-0.07);
+  \draw[line width=0.4pt] (1.95,\y) -- (1.80,\y-0.07);}
+\draw[pl] (0.35,1.55) rectangle (2.85,2.05);
+\draw[bl] (1.32,0.57) rectangle (1.88,2.05);
+\draw[bl] (1.05,2.05) rectangle (2.15,2.42);
+\draw[red!75!black,line width=1.5pt] (1.32,0.57) -- (1.88,0.57);
+\draw[->,red!75!black] (3.42,0.62) -- (1.98,0.58);
+\node[red!75!black,anchor=west,align=left,font=\tiny,text width=2.5cm] at (3.46,0.62)
+  {bolt \textbf{bottoms} in the hole --- it never clamps the joint};
+\draw[->,red!75!black] (0.30,2.92) -- (1.12,2.12);
+\node[red!75!black,anchor=south,align=center,font=\tiny,text width=2.4cm] at (0.30,2.94)
+  {no chamfer: invites cross-threading};
+\node[anchor=north,font=\bfseries,red!75!black] at (1.6,-0.18) {WRONG};
+\end{scope}
+% ---------------- RIGHT ----------------
+\begin{scope}[xshift=7.6cm]
+\fill[gray!24] (0,0) rectangle (3.2,1.55); \draw[thick] (0,0) rectangle (3.2,1.55);
+\fill[white] (1.25,0.22) rectangle (1.95,1.55);
+\draw[thick] (1.25,1.55) -- (1.25,0.22) -- (1.95,0.22) -- (1.95,1.55);
+\foreach \y in {0.78,0.94,1.10,1.26,1.42}{
+  \draw[line width=0.4pt] (1.25,\y) -- (1.40,\y-0.07);
+  \draw[line width=0.4pt] (1.95,\y) -- (1.80,\y-0.07);}
+\draw[green!40!black,line width=1.2pt] (1.25,1.55) -- (1.40,1.42);
+\draw[green!40!black,line width=1.2pt] (1.95,1.55) -- (1.80,1.42);
+\draw[pl] (0.35,1.55) rectangle (2.85,2.05);
+\draw[bl] (1.32,0.68) rectangle (1.88,2.05);
+\draw[bl] (1.05,2.05) rectangle (2.15,2.42);
+\draw[<->,green!40!black] (2.12,0.68) -- (2.12,1.55);
+\draw[->,green!40!black] (3.42,1.18) -- (2.18,1.14);
+\node[green!35!black,anchor=west,align=left,font=\tiny,text width=2.6cm] at (3.46,1.18)
+  {engagement $L_e$, set by the \emph{nut} material};
+\draw[<->,green!40!black] (1.03,0.22) -- (1.03,0.68);
+\draw[->,green!40!black] (0.26,0.05) -- (0.96,0.42);
+\node[green!35!black,anchor=east,align=right,font=\tiny,text width=2.1cm] at (0.22,0.05)
+  {drill deeper than the thread};
+\draw[->,green!40!black] (0.30,2.92) -- (1.22,1.62);
+\node[green!35!black,anchor=south,align=center,font=\tiny] at (0.30,2.94) {chamfered lead-in};
+\node[anchor=north,font=\bfseries,green!35!black] at (1.6,-0.48) {RIGHT};
+\end{scope}
+\node[anchor=north,font=\bfseries,red!75!black] at (1.6,-0.48) {};
+\end{tikzpicture}

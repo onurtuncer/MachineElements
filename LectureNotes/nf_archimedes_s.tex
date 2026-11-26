@@ -1,0 +1,56 @@
+% The Archimedes screw: the same helix, carrying material instead of clamping.
+\begin{tikzpicture}[>=Latex,line join=round]
+\tikzset{
+  water/.style={fill=cyan!35,draw=cyan!60!black,thin},
+  tube/.style={draw=black!60,thick},
+  flight/.style={draw=blue!55!black,thick},
+  lb/.style={font=\small},
+  sm/.style={font=\scriptsize,text=black!65}
+}
+\def\ang{27}      % inclination
+\def\r{0.72}      % tube radius
+\def\p{1.55}      % pitch (projected)
+\def\Lx{9.3}      % length along the axis
+
+% ---------- lower reservoir ----------
+\fill[cyan!22,draw=cyan!55!black] (-2.90,-1.95) rectangle (1.40,-0.05);
+\draw[black!55,thick] (-2.90,-2.10) -- (-2.90,-0.05) (1.40,-2.10) -- (1.40,-0.05);
+\draw[black!55,thick] (-3.00,-2.10) -- (1.50,-2.10);
+\node[sm,anchor=north] at (-1.0,-2.18) {source};
+
+\begin{scope}[rotate=\ang]
+
+% ---------- tube ----------
+\draw[tube,fill=black!3] (0,-\r) rectangle (\Lx,\r);
+
+% ---------- water pockets, one per pitch, lying on the low side ----------
+\foreach \i in {0,1,...,5}{
+  \pgfmathsetmacro\xc{0.72+\i*\p}
+  \fill[water] (\xc-0.52,-\r+0.02) -- (\xc+0.52,-\r+0.02)
+     -- (\xc+0.40,-\r+0.40) -- (\xc-0.40,-\r+0.40) -- cycle;
+}
+
+% ---------- the flight: near edge solid, far edge dashed ----------
+\draw[flight,domain=0:\Lx,samples=400,variable=\x]
+  plot ({\x},{\r*sin(360*\x/\p)});
+\draw[flight,dashed,opacity=0.55,domain=0:\Lx,samples=400,variable=\x]
+  plot ({\x},{-\r*sin(360*\x/\p)});
+
+% ---------- pitch dimension ----------
+\draw[<->,gray!80!black,thin] (0.385,\r+0.34) -- (0.385+\p,\r+0.34);
+\node[font=\small,fill=white,inner sep=1pt] at (0.385+\p/2,\r+0.34) {$p$};
+
+% ---------- rotation ----------
+\draw[->,red!65!black,very thick] ({\Lx-2.0},{\r+1.30}) arc (-70:200:0.40);
+\node[font=\small,text=red!65!black,anchor=west] at ({\Lx-1.45},{\r+1.30}) {turn};
+
+% ---------- outlet ----------
+\draw[tube] (\Lx,\r) -- (\Lx+0.55,\r) (\Lx,-\r) -- (\Lx+0.55,-\r);
+\end{scope}
+
+% ---------- discharge ----------
+\coordinate (out) at ({(\Lx+0.55)*cos(\ang)-(-\r)*sin(\ang)},{(\Lx+0.55)*sin(\ang)+(-\r)*cos(\ang)});
+\draw[water,line width=1.4pt,draw=cyan!60!black] (out) .. controls +(0.35,-0.45) and +(0,0.55) .. ($(out)+(0.6,-1.5)$);
+\node[sm,anchor=north west,align=left] at ($(out)+(0.42,-1.55)$) {delivered\\ uphill};
+
+\end{tikzpicture}

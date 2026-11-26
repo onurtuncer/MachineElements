@@ -1,0 +1,35 @@
+
+\begin{tikzpicture}[scale=1.5,>=Stealth,font=\scriptsize,line join=round]
+\def\hh{1.083}
+% ---------------- UN: flat / uncontrolled root ----------------
+\begin{scope}
+\fill[gray!14] (0.12,0) -- (0.88,0) -- (1.325,\hh) -- (1.675,\hh) -- (2.12,0) -- (2.6,0)
+  -- (2.6,-0.5) -- (0.12,-0.5) -- cycle;
+\draw[thick] (0.12,0) -- (0.88,0) -- (1.325,\hh) -- (1.675,\hh) -- (2.12,0) -- (2.6,0);
+\draw[thick] (0.12,-0.5) -- (2.6,-0.5);
+\draw[red!75!black,line width=1.2pt] (0.60,0) -- (0.88,0) -- (1.00,0.29);
+\draw[->,red!75!black] (0.55,0.72) -- (0.84,0.06);
+\node[red!75!black,anchor=south,align=center,font=\tiny] at (0.55,0.72) {flat or\\ uncontrolled root};
+\draw[blue!55!black,dashed] (-0.05,0) -- (2.75,0);
+\node[anchor=north,font=\bfseries] at (1.36,-0.70) {UN / ISO metric};
+\node[anchor=north,align=center,font=\tiny] at (1.36,-0.98) {root radius not specified\\ $K_t$ high};
+\end{scope}
+% ---------------- UNJ: controlled root radius ----------------
+\begin{scope}[xshift=3.5cm]
+\fill[gray!14] (0.12,0.30) arc (229.6:310.4:0.586) -- (1.332,\hh) -- (1.682,\hh)
+  -- (2.134,0.30) arc (229.6:310.4:0.586) -- (3.0,0.30) -- (3.0,-0.5) -- (0.12,-0.5) -- cycle;
+\draw[thick] (0.12,0.30) arc (229.6:310.4:0.586) -- (1.332,\hh) -- (1.682,\hh)
+  -- (2.134,0.30) arc (229.6:310.4:0.586) -- (3.0,0.30);
+\draw[thick] (0.12,-0.5) -- (3.0,-0.5);
+\draw[green!45!black,line width=1.2pt] (0.12,0.30) arc (229.6:310.4:0.586);
+\draw[->,green!45!black] (0.42,0.95) -- (0.50,0.22);
+\node[green!35!black,anchor=south,align=center,font=\tiny] at (0.42,0.95)
+  {controlled radius\\ $0.15011p$ to $0.18042p$};
+\draw[blue!55!black,dashed] (0.0,0) -- (3.22,0);
+\draw[blue!55!black,densely dotted] (0.0,0.16) -- (3.22,0.16);
+\draw[<->] (3.10,0) -- (3.10,0.16);
+\node[anchor=west,font=\tiny,align=left] at (3.24,0.08) {UNJ minor dia.\\ is \emph{larger}};
+\node[anchor=north,font=\bfseries] at (1.5,-0.70) {UNJ (AS8879) / MJ (ISO 5855)};
+\node[anchor=north,align=center,font=\tiny] at (1.5,-0.98) {root radius specified\\ $K_t$ lower, so $K_f$ lower};
+\end{scope}
+\end{tikzpicture}

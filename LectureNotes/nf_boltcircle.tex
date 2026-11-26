@@ -1,0 +1,24 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize,line join=round]
+% 1 unit = 30 mm.  OD 340, bolt circle 300, bore 250, cone 27.5, hole 8.5
+\def\Ro{5.67}\def\Rb{5.00}\def\Ri{4.17}\def\Rc{0.458}\def\Rh{0.142}
+\fill[gray!18] (0,0) circle (\Ro);
+\fill[white] (0,0) circle (\Ri);
+\draw[thick] (0,0) circle (\Ro);
+\draw[thick] (0,0) circle (\Ri);
+\draw[gray!55!black,dash pattern=on 5pt off 2pt on 1pt off 2pt] (0,0) circle (\Rb);
+\foreach \k in {0,...,23}{
+  \fill[orange!55,fill opacity=0.55] (\k*15:\Rb) circle (\Rc);
+  \draw[orange!75!black,line width=0.4pt] (\k*15:\Rb) circle (\Rc);}
+\foreach \k in {0,...,23}{\draw[thick,fill=gray!60] (\k*15:\Rb) circle (\Rh);}
+% labels placed in the empty bore
+\node[align=center,font=\small] at (0,0.42)
+  {\textbf{24 $\times$ M8 class 10.9}\\[2pt] pitch \SI{39.3}{mm} $=4.9\,d$};
+\node[anchor=north,align=center,font=\scriptsize] at (0,-0.30)
+  {$D_{bc}=\SI{300}{mm}$\\ $D_s=\SI{250}{mm}$, \ $p=\SI{0.60}{MPa}$};
+% cone callout
+\draw[->,orange!65!black] (48:7.55) -- (37:5.52);
+\node[orange!60!black,anchor=west,align=left,font=\tiny,text width=3.5cm] at (48:7.6)
+  {stress cone \SI{27.5}{mm} at the interface, bolt pitch \SI{39.3}{mm}\\[2pt]
+   $\Rightarrow$ an \SI{11.7}{mm} \textbf{unclamped} gap between every pair of bolts};
+\end{tikzpicture}

@@ -1,0 +1,47 @@
+% What preload you actually get, by method. Data: IFI, via NASA RP-1228 Table VII.
+\begin{tikzpicture}[>=Latex]
+\tikzset{
+  nm/.style={font=\small,anchor=east},
+  ct/.style={font=\small,anchor=west,text=black!65},
+  ax/.style={font=\scriptsize,text=black!70}
+}
+\def\X#1{(#1-55)*0.112}          % percent -> cm
+\def\dy{0.86}
+
+% ---- band for each method ----
+% {row}{name}{tolerance}{cost}{colour}
+\foreach \i/\nmm/\tol/\cost/\col in {
+  0/{Feel --- the operator's judgement}/35/1/{red!70},
+  1/{Torque wrench}/25/{1.5}/{red!45},
+  2/{Turn of the nut}/15/3/{orange!65},
+  3/{Load-indicating washers}/10/7/{yellow!70!orange},
+  4/{Fastener elongation}/5/15/{green!55!black!60},
+  5/{Strain gauges}/1/20/{green!60!black}}
+{
+  \pgfmathsetmacro\y{-\i*\dy}
+  \fill[\col,opacity=0.75,rounded corners=1pt]
+    ({\X{100-\tol}},\y-0.26) rectangle ({\X{100+\tol}},\y+0.26);
+  \draw[black!55,thin,rounded corners=1pt]
+    ({\X{100-\tol}},\y-0.26) rectangle ({\X{100+\tol}},\y+0.26);
+  \node[nm] at (-0.25,\y) {\nmm};
+  \node[ct] at (10.85,\y) {$\times\,\cost$};
+}
+% explicit tolerance labels (elongation is a range)
+\foreach \i/\txt in {0/{$\pm35\%$},1/{$\pm25\%$},2/{$\pm15\%$},3/{$\pm10\%$},
+                     4/{$\pm3$--$5\%$},5/{$\pm1\%$}}{
+  \pgfmathsetmacro\y{-\i*\dy}
+  \node[font=\scriptsize,anchor=west,text=black!80] at (9.45,\y) {\txt};
+}
+
+% ---- target line and axis ----
+\draw[black!70,thick,dashed] ({\X{100}},0.55) -- ({\X{100}},-5*\dy-0.55);
+\node[font=\small,anchor=south] at ({\X{100}},0.58) {the preload you asked for};
+
+\draw[black!60] ({\X{60}},-5*\dy-0.62) -- ({\X{140}},-5*\dy-0.62);
+\foreach \p in {60,80,100,120,140}{
+  \draw[black!60] ({\X{\p}},-5*\dy-0.62) -- ({\X{\p}},-5*\dy-0.75);
+  \node[ax,anchor=north] at ({\X{\p}},-5*\dy-0.78) {\p\,\%};}
+\node[ax,anchor=north] at ({\X{100}},-5*\dy-1.25) {preload actually achieved};
+\node[font=\scriptsize,anchor=south west,text=black!65] at (9.45,0.58) {relative cost};
+
+\end{tikzpicture}

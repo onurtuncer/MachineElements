@@ -1,0 +1,67 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize,line join=round]
+\tikzset{w/.style={thick,fill=blue!28},ax/.style={dash pattern=on 5pt off 2pt on 1pt off 2pt,gray!60!black,line width=0.3pt}}
+\def\panel#1#2{\node[anchor=north,font=\bfseries\tiny] at (#1,-0.64) {#2};}
+% 1 plain
+\begin{scope}
+\draw[ax] (-0.1,0) -- (1.9,0);
+\draw[w] (0.45,0.10) rectangle (1.55,0.34);
+\draw[w] (0.45,-0.34) rectangle (1.55,-0.10);
+\panel{1.0}{plain (flat)}
+\node[anchor=north,align=center,font=\tiny,text width=2.3cm] at (1.0,-0.96)
+  {spreads bearing load; protects the surface; trims the grip};
+\end{scope}
+% 2 hardened / structural
+\begin{scope}[xshift=2.9cm]
+\draw[ax] (-0.1,0) -- (1.9,0);
+\draw[thick,fill=gray!62] (0.45,0.10) rectangle (1.55,0.40);
+\draw[thick,fill=gray!62] (0.45,-0.40) rectangle (1.55,-0.10);
+\panel{1.0}{hardened}
+\node[anchor=north,align=center,font=\tiny,text width=2.3cm] at (1.0,-0.96)
+  {thicker and through-hardened; stops brinelling under a high-strength head};
+\end{scope}
+% 3 countersunk
+\begin{scope}[xshift=5.8cm]
+\draw[ax] (-0.1,0) -- (1.9,0);
+\draw[w] (0.45,0.10) -- (1.55,0.10) -- (1.55,0.40) -- (0.80,0.40) -- cycle;
+\draw[w] (0.45,-0.10) -- (1.55,-0.10) -- (1.55,-0.40) -- (0.80,-0.40) -- cycle;
+\panel{1.0}{countersunk}
+\node[anchor=north,align=center,font=\tiny,text width=2.3cm] at (1.0,-0.96)
+  {seats a flush or \SI{100}{\degree} head without point contact};
+\end{scope}
+% 4 spherical pair
+\begin{scope}[xshift=8.7cm]
+\draw[ax] (-0.1,0) -- (1.9,0);
+% lower washer: flat base, concave spherical seat on top
+\draw[w] (0.40,0.10) -- (1.60,0.10) -- (1.60,0.40)
+  .. controls (1.25,0.20) and (0.75,0.20) .. (0.40,0.40) -- cycle;
+% upper washer: convex spherical underside, tilted to show it self-aligns
+\draw[thick,fill=blue!14,rotate around={7:(1.0,0.46)}]
+  (0.40,0.40) .. controls (0.75,0.20) and (1.25,0.20) .. (1.60,0.40)
+  -- (1.60,0.66) -- (0.40,0.66) -- cycle;
+\draw[w] (0.40,-0.10) rectangle (1.60,-0.34);
+\panel{1.0}{spherical pair}
+\node[anchor=north,align=center,font=\tiny,text width=2.4cm] at (1.0,-0.96)
+  {takes out angular misalignment so the bolt is not bent};
+\end{scope}
+% 5 Belleville
+\begin{scope}[xshift=11.6cm]
+\draw[ax] (-0.1,0) -- (1.9,0);
+\draw[w] (0.45,0.10) -- (1.55,0.40) -- (1.55,0.58) -- (0.45,0.28) -- cycle;
+\draw[w] (0.45,-0.28) -- (1.55,-0.58) -- (1.55,-0.40) -- (0.45,-0.10) -- cycle;
+\panel{1.0}{Belleville}
+\node[anchor=north,align=center,font=\tiny,text width=2.4cm] at (1.0,-0.96)
+  {a deliberate spring: holds preload through thermal cycling and settling};
+\end{scope}
+% 6 helical spring "lock" washer
+\begin{scope}[xshift=14.5cm]
+\draw[ax] (-0.1,0) -- (1.9,0);
+\draw[thick,fill=red!22] (0.45,0.10) -- (1.55,0.10) -- (1.55,0.34) -- (0.45,0.46) -- cycle;
+\draw[thick,fill=red!22] (0.45,-0.46) -- (1.55,-0.34) -- (1.55,-0.10) -- (0.45,-0.10) -- cycle;
+\draw[red!75!black,line width=1.4pt] (0.30,0.72) -- (1.70,-0.72);
+\draw[red!75!black,line width=1.4pt] (1.70,0.72) -- (0.30,-0.72);
+\panel{1.0}{helical ``lock''}
+\node[anchor=north,align=center,font=\tiny,text width=2.5cm,red!75!black] at (1.0,-0.96)
+  {flat by the time the bolt is tight --- \textbf{not} a locking device};
+\end{scope}
+\end{tikzpicture}

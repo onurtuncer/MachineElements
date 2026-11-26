@@ -1,0 +1,13 @@
+
+\begin{tikzpicture}[scale=1.0,>=Stealth,font=\scriptsize,
+  box/.style={draw=blue!50!black,fill=blue!6,rounded corners,align=center,minimum height=1.25cm,text width=2.5cm,inner sep=3pt}]
+\node[box] (a) {\textbf{1. Count}\\ rainflow $\Rightarrow$\\ range \& mean};
+\node[box,right=0.85cm of a] (b) {\textbf{2. Correct}\\ Goodman $\Rightarrow$\\ $\sigma_{ar}$};
+\node[box,right=0.85cm of b] (c) {\textbf{3. Look up}\\ S--N curve\\ $\Rightarrow N_i$};
+\node[box,right=0.85cm of c] (d) {\textbf{4. Sum}\\ $D=\sum n_i/N_i$};
+\foreach \x/\y in {a/b,b/c,c/d} \draw[->,very thick,blue!50!black] (\x) -- (\y);
+\node[font=\tiny,anchor=north,text width=2.6cm,align=center] at ($(a.south)+(0,-0.1)$) {$(\sigma_a,\sigma_m,n_i)$};
+\node[font=\tiny,anchor=north,text width=2.6cm,align=center] at ($(b.south)+(0,-0.1)$) {$\dfrac{\sigma_a}{1-\sigma_m/S_{ut}}$};
+\node[font=\tiny,anchor=north,text width=2.6cm,align=center] at ($(c.south)+(0,-0.1)$) {$\sigma_{ar}=aN^{b}$};
+\node[font=\tiny,anchor=north,text width=2.8cm,align=center] at ($(d.south)+(0,-0.1)$) {life $=1/D$ blocks};
+\end{tikzpicture}
